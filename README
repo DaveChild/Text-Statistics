@@ -1,0 +1,26 @@
+PHP Text Statistics
+
+Description
+    The PHP Text Statistics class will help you to indentify issues with your website content, especially with readability. 
+
+    It allows you to measure the readability of text using common scoring systems, including: 
+    Flesch Kincaid Reading Ease 
+    Flesch Kincaid Grade Level 
+    Gunning Fog Score 
+    Coleman Liau Index 
+    SMOG Index 
+    Automated Reability Index 
+
+    The code that generates the statistics is in a simple class structure. There are also several unit test classes to ensure that changes made don't break existing functionality. There is also a live version of this tool. 
+
+    One of the biggest challenges with measuring text readability is the counting of syllables, which can be tricky to work out. There are rules in the statistics file for working out the syllable count of words, and a large list of words to test these rules against. 
+
+    Please feel free to add to the test word list, especially if you can find words whose syllable count is not correctly calculated (even more especially if you can also add code to the class so your word is correctly handled!). 
+
+    Homographs are going to be impossible to calculate as they depend on context (i.e., "he moped around the house", "she rode her moped to school), but there are few enough of these not to be a concern. There is a by-no-means-comprehensive list of these in the resources folder.
+
+Homepage and Live Version
+    http://www.addedbytes.com/tools/readability-score/
+
+Group
+    http://groups.google.com/group/php-text-statistics/
