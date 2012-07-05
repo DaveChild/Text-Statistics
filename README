@@ -20,10 +20,10 @@ Description
     Homographs are going to be impossible to calculate as they depend on context (i.e., "he moped around the house", "she rode her moped to school), but there are few enough of these not to be a concern. There is a by-no-means-comprehensive list of these in the resources folder.
 
 Homepage and Live Version
-    http://www.addedbytes.com/tools/readability-score/
+    http://www.readability-score.com/
 
-Group
-    http://groups.google.com/group/php-text-statistics/
+JavaScript Port
+    https://github.com/cgiffard/TextStatistics.js
 
 License
     http://www.opensource.org/licenses/bsd-license.php
