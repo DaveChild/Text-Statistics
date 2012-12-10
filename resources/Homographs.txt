@@ -1,6 +1,8 @@
 Homographs which have different syllables depending upon their meaning.
 
 agape
+aged
+blessed
 coax
 coop
 crooked
@@ -25,4 +27,5 @@ ragged
 real
 rose
 sake
+separate
 tier
