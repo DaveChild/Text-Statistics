@@ -55,7 +55,9 @@
          */
         public function flesch_kincaid_reading_ease($strText) {
             $strText = $this->clean_text($strText);
-            return round((206.835 - (1.015 * $this->average_words_per_sentence($strText)) - (84.6 * $this->average_syllables_per_word($strText))), 1);
+            $score   = round((206.835 - (1.015 * $this->average_words_per_sentence($strText)) - (84.6 * $this->average_syllables_per_word($strText))), 1);
+            
+            return $this->normalize_score($score, 0, 100);
         }
 
         /**
@@ -64,7 +66,9 @@
          */
         public function flesch_kincaid_grade_level($strText) {
             $strText = $this->clean_text($strText);
-            return round(((0.39 * $this->average_words_per_sentence($strText)) + (11.8 * $this->average_syllables_per_word($strText)) - 15.59), 1);
+            $score   = round(((0.39 * $this->average_words_per_sentence($strText)) + (11.8 * $this->average_syllables_per_word($strText)) - 15.59), 1);
+            
+            return $this->normalize_score($score, 0, 12);
         }
 
         /**
@@ -73,7 +77,9 @@
          */
         public function gunning_fog_score($strText) {
             $strText = $this->clean_text($strText);
-            return round((($this->average_words_per_sentence($strText) + $this->percentage_words_with_three_syllables($strText, false)) * 0.4), 1);
+            $score   = round((($this->average_words_per_sentence($strText) + $this->percentage_words_with_three_syllables($strText, false)) * 0.4), 1);
+            
+            return $this->normalize_score($score, 0, 19);
         }
 
         /**
@@ -82,7 +88,9 @@
          */
         public function coleman_liau_index($strText) {
             $strText = $this->clean_text($strText);
-            return round( ( (5.89 * ($this->letter_count($strText) / $this->word_count($strText))) - (0.3 * ($this->sentence_count($strText) / $this->word_count($strText))) - 15.8 ), 1);
+            $score   = round( ( (5.89 * ($this->letter_count($strText) / $this->word_count($strText))) - (0.3 * ($this->sentence_count($strText) / $this->word_count($strText))) - 15.8 ), 1);
+            
+            return $this->normalize_score($score, 0, 12);	
         }
 
         /**
@@ -91,7 +99,9 @@
          */
         public function smog_index($strText) {
             $strText = $this->clean_text($strText);
-            return round(1.043 * sqrt(($this->words_with_three_syllables($strText) * (30 / $this->sentence_count($strText))) + 3.1291), 1);
+            $score   = round(1.043 * sqrt(($this->words_with_three_syllables($strText) * (30 / $this->sentence_count($strText))) + 3.1291), 1);
+            
+            return $this->normalize_score($score, 0, 12);
         }
 
         /**
@@ -100,7 +110,9 @@
          */
         public function automated_readability_index($strText) {
             $strText = $this->clean_text($strText);
-            return round(((4.71 * ($this->letter_count($strText) / $this->word_count($strText))) + (0.5 * ($this->word_count($strText) / $this->sentence_count($strText))) - 21.43), 1);
+            $score   = round(((4.71 * ($this->letter_count($strText) / $this->word_count($strText))) + (0.5 * ($this->word_count($strText) / $this->sentence_count($strText))) - 21.43), 1);
+            
+            return $this->normalize_score($score, 0, 12);	
         }
 
         /**
@@ -422,6 +434,26 @@
             $intSyllableCount = ($intSyllableCount == 0) ? 1 : $intSyllableCount;
             return $intSyllableCount;
         }
+        
+        	/**
+	 * Normalizes score accordin to min & max allowed. If score larger than max, max is returned. If score less than min, min is returned.
+	 * @param   score	Initial score
+	 * @param   min     Minimum score allowed
+	 * @param   max     Maximum score allowed
+	 */
+	    private function normalize_score($score, $min, $max)
+	    {
+		    if ($score > $max)
+		    {
+			    $score = $max;
+		    }
+		    elseif ($score < $min) 
+		    {
+			    $score = $min;
+		    }
+		
+		    return $score;
+	}
 
     }
 
