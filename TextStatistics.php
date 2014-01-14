@@ -288,6 +288,10 @@ class TextStatistics
      */
     public function sentence_count($strText)
     {
+        if (strlen(trim($strText)) == 0) {
+            return 0;
+        }
+
         $strText = $this->clean_text($strText);
         // Will be tripped up by "Mr." or "U.K.". Not a major concern at this point.
         $intSentences = max(1, $this->text_length(preg_replace('/[^\.!?]/', '', $strText)));
@@ -301,6 +305,10 @@ class TextStatistics
      */
     public function word_count($strText)
     {
+        if (strlen(trim($strText)) == 0) {
+            return 0;
+        }
+
         $strText = $this->clean_text($strText);
         // Will be tripped by by em dashes with spaces either side, among other similar characters
         $intWords = 1 + $this->text_length(preg_replace('/[^ ]/', '', $strText)); // Space count + 1 is word count
@@ -404,6 +412,10 @@ class TextStatistics
      */
     public function syllable_count($strWord)
     {
+        if (strlen(trim($strWord)) == 0) {
+            return 0;
+        }
+
         // Should be no non-alpha characters
         $strWord = preg_replace('/[^A_Za-z]/', '', $strWord);
 
