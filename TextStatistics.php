@@ -58,7 +58,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        return round((206.835 - (1.015 * $this->average_words_per_sentence($strText)) - (84.6 * $this->average_syllables_per_word($strText))), 1);
+        $score = round((206.835 - (1.015 * $this->average_words_per_sentence($strText)) - (84.6 * $this->average_syllables_per_word($strText))), 1);
+
+        return self::normalize_score($score, 0, 100);
     }
 
     /**
@@ -69,7 +71,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        return round(((0.39 * $this->average_words_per_sentence($strText)) + (11.8 * $this->average_syllables_per_word($strText)) - 15.59), 1);
+        $score = round(((0.39 * $this->average_words_per_sentence($strText)) + (11.8 * $this->average_syllables_per_word($strText)) - 15.59), 1);
+
+        return self::normalize_score($score, 0, 12);
     }
 
     /**
@@ -80,7 +84,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        return round((($this->average_words_per_sentence($strText) + $this->percentage_words_with_three_syllables($strText, false)) * 0.4), 1);
+        $score = round((($this->average_words_per_sentence($strText) + $this->percentage_words_with_three_syllables($strText, false)) * 0.4), 1);
+
+        return self::normalize_score($score, 0, 19);
     }
 
     /**
@@ -91,7 +97,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        return round(((5.89 * ($this->letter_count($strText) / $this->word_count($strText))) - (0.3 * ($this->sentence_count($strText) / $this->word_count($strText))) - 15.8 ), 1);
+        $score = round(((5.89 * ($this->letter_count($strText) / $this->word_count($strText))) - (0.3 * ($this->sentence_count($strText) / $this->word_count($strText))) - 15.8 ), 1);
+
+        return self::normalize_score($score, 0, 12);
     }
 
     /**
@@ -102,7 +110,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        return round(1.043 * sqrt(($this->words_with_three_syllables($strText) * (30 / $this->sentence_count($strText))) + 3.1291), 1);
+        $score = round(1.043 * sqrt(($this->words_with_three_syllables($strText) * (30 / $this->sentence_count($strText))) + 3.1291), 1);
+
+        return self::normalize_score($score, 0, 12);
     }
 
     /**
@@ -113,7 +123,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        return round(((4.71 * ($this->letter_count($strText) / $this->word_count($strText))) + (0.5 * ($this->word_count($strText) / $this->sentence_count($strText))) - 21.43), 1);
+        $score = round(((4.71 * ($this->letter_count($strText) / $this->word_count($strText))) + (0.5 * ($this->word_count($strText) / $this->sentence_count($strText))) - 21.43), 1);
+
+        return self::normalize_score($score, 0, 12);
     }
 
     /**
@@ -486,5 +498,24 @@ class TextStatistics
         $intSyllableCount = ($intSyllableCount == 0) ? 1 : $intSyllableCount;
 
         return $intSyllableCount;
+    }
+
+    /**
+     * Normalizes score accordin to min & max allowed. If score larger
+     * than max, max is returned. If score less than min, min is returned.
+     * Thanks to github.com/lvil
+     * @param   score        Initial score
+     * @param   min     Minimum score allowed
+     * @param   max     Maximum score allowed
+     */
+    public static function normalize_score($score, $min, $max)
+    {
+        if ($score > $max) {
+                $score = $max;
+        } elseif ($score < $min) {
+                $score = $min;
+        }
+
+        return $score;
     }
 }
