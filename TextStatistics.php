@@ -110,6 +110,10 @@
         public function text_length($strText) {
             $intTextLength = 0;
             try {
+
+                if(!extension_loaded('mbstring'))
+                    throw new Exception('The extension mbstring is not loaded.');
+
                 if ($this->strEncoding == '') {
                     $intTextLength = mb_strlen($strText);
                 } else {
@@ -130,6 +134,10 @@
             $intTextLength = 0;
             $strText = preg_replace('/[^A-Za-z]+/', '', $strText);
             try {
+
+                if(!extension_loaded('mbstring'))
+                    throw new Exception('The extension mbstring is not loaded.');
+
                 if ($this->strEncoding == '') {
                     $intTextLength = mb_strlen($strText);
                 } else {
@@ -171,6 +179,10 @@
         protected function lower_case($strText) {
             $strLowerCaseText = '';
             try {
+
+                if(!extension_loaded('mbstring'))
+                    throw new Exception('The extension mbstring is not loaded.');
+                
                 if ($this->strEncoding == '') {
                     $strLowerCaseText = mb_strtolower($strText);
                 } else {
@@ -189,6 +201,10 @@
         protected function upper_case($strText) {
             $strUpperCaseText = '';
             try {
+
+                if(!extension_loaded('mbstring'))
+                    throw new Exception('The extension mbstring is not loaded.');
+                
                 if ($this->strEncoding == '') {
                     $strUpperCaseText = mb_strtoupper($strText);
                 } else {
@@ -209,6 +225,10 @@
         protected function substring($strText, $intStart, $intLength) {
             $strSubstring = '';
             try {
+
+                if(!extension_loaded('mbstring'))
+                    throw new Exception('The extension mbstring is not loaded.');
+                
                 if ($this->strEncoding == '') {
                     $strSubstring = mb_substr($strText, $intStart, $intLength);
                 } else {
