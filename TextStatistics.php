@@ -38,7 +38,7 @@ class TextStatistics
     
     protected $blnMbstring = true; // Efficiency: Is the MB String extension loaded ?
 
-    protected $blnBcmath = true; // Efficiency: Is the BC Math extension loaded ?
+    protected static $blnBcmath = true; // Efficiency: Is the BC Math extension loaded ?
 
     /**
      * Constructor.
@@ -54,7 +54,7 @@ class TextStatistics
         }
         
         $this->blnMbstring = extension_loaded('mbstring');
-        $this->blnBcmath = extension_loaded('bcmath');
+        self::$blnBcmath = extension_loaded('bcmath');
     }
 
     /**
@@ -594,7 +594,7 @@ class TextStatistics
 			return false;
 		}
 
-		if ($this->blnBcmath) {
+		if (self::blnBcmath) {
 			$number1 = strval( $number1 );
 			$number2 = strval( $number2 );
 		}
@@ -606,25 +606,25 @@ class TextStatistics
 			case '+':
 			case 'add':
 			case 'addition':
-				$result = ($this->blnBcmath) ? bcadd( $number1, $number2, $precision ) /* string */ : ($number1 + $number2);
+				$result = (self::blnBcmath) ? bcadd( $number1, $number2, $precision ) /* string */ : ($number1 + $number2);
 				break;
 	
 			case '-':
 			case 'sub':
 			case 'subtract':
-				$result = ($this->blnBcmath) ? bcsub( $number1, $number2, $precision ) /* string */ : ($number1 - $number2);
+				$result = (self::blnBcmath) ? bcsub( $number1, $number2, $precision ) /* string */ : ($number1 - $number2);
 				break;
 	
 			case '*':
 			case 'mul':
 			case 'multiply':
-				$result = ($this->blnBcmath) ? bcmul( $number1, $number2, $precision ) /* string */ : ($number1 * $number2);
+				$result = (self::blnBcmath) ? bcmul( $number1, $number2, $precision ) /* string */ : ($number1 * $number2);
 				break;
 	
 			case '/':
 			case 'div':
 			case 'divide':
-				if ($this->blnBcmath) {
+				if (self::blnBcmath) {
 					$result = bcdiv( $number1, $number2, $precision ); // string, or NULL if right_operand is 0
 				} else if ($number2 != 0) {
 					$result = $number1 / $number2;
@@ -638,7 +638,7 @@ class TextStatistics
 			case '%':
 			case 'mod':
 			case 'modulus':
-				if ($this->blnBcmath) {
+				if (self::blnBcmath) {
 					$result = bcmod( $number1, $number2, $precision ); // string, or NULL if modulus is 0.
 				} else if ($number2 != 0) {
 					$result = $number1 % $number2;
@@ -653,7 +653,7 @@ class TextStatistics
 			case 'comp':
 			case 'compare':
 				$compare = true;
-				if ($this->blnBcmath) {
+				if (self::blnBcmath) {
 					$result = bccomp( $number1, $number2, $precision ); // returns int 0, 1 or -1
 				} else {
 					$result = ($number1 == $number2) ? 0 : ( ($number1 > $number2) ? 1 : -1 );
