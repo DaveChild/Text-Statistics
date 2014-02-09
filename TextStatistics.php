@@ -331,7 +331,7 @@ class TextStatistics
         }
 
         $strText = $this->clean_text($strText);
-        // Will be tripped by by em dashes with spaces either side, among other similar characters
+        // Will be tripped by em dashes with spaces either side, among other similar characters
         $intWords = 1 + $this->text_length(preg_replace('/[^ ]/', '', $strText)); // Space count + 1 is word count
 
         return $intWords;
@@ -348,7 +348,7 @@ class TextStatistics
         $intSentenceCount = $this->sentence_count($strText);
         $intWordCount = $this->word_count($strText);
 
-        return self::bc_calc($intWordCount, '/', $intSentenceCount);
+        return ( self::bc_calc($intWordCount, '/', $intSentenceCount) );
     }
 
     /**
@@ -361,7 +361,8 @@ class TextStatistics
         $strText = $this->clean_text($strText);
         $intSyllableCount = 0;
         $arrWords = explode(' ', $strText);
-        for ($i = 0, $intWordCount = count($arrWords); $i < $intWordCount; $i++) {
+        $intWordCount = count($arrWords);
+        for ($i = 0; $i < $intWordCount; $i++) {
             $intSyllableCount += $this->syllable_count($arrWords[$i]);
         }
 
@@ -383,7 +384,7 @@ class TextStatistics
             $intSyllableCount += $this->syllable_count($arrWords[$i]);
         }
 
-        return self::bc_calc($intSyllableCount, '/', $intWordCount);
+        return ( self::bc_calc($intSyllableCount, '/', $intWordCount) );
     }
 
     /**
