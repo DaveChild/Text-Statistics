@@ -52,7 +52,8 @@ class TextStatistics
 
     /**
      * Gives the Flesch-Kincaid Reading Ease of text entered rounded to one digit
-     * @param   strText         Text to be checked
+     * @param   string	$strText         Text to be checked
+     * @return	int|float
      */
     public function flesch_kincaid_reading_ease($strText)
     {
@@ -65,7 +66,8 @@ class TextStatistics
 
     /**
      * Gives the Flesch-Kincaid Grade level of text entered rounded to one digit
-     * @param   strText         Text to be checked
+     * @param   string	$strText         Text to be checked
+     * @return	int|float
      */
     public function flesch_kincaid_grade_level($strText)
     {
@@ -78,7 +80,8 @@ class TextStatistics
 
     /**
      * Gives the Gunning-Fog score of text entered rounded to one digit
-     * @param   strText         Text to be checked
+     * @param   string	$strText         Text to be checked
+     * @return	int|float
      */
     public function gunning_fog_score($strText)
     {
@@ -91,7 +94,8 @@ class TextStatistics
 
     /**
      * Gives the Coleman-Liau Index of text entered rounded to one digit
-     * @param   strText         Text to be checked
+     * @param   string	$strText         Text to be checked
+     * @return	int|float
      */
     public function coleman_liau_index($strText)
     {
@@ -104,7 +108,8 @@ class TextStatistics
 
     /**
      * Gives the SMOG Index of text entered rounded to one digit
-     * @param   strText         Text to be checked
+     * @param   string	$strText         Text to be checked
+     * @return	int|float
      */
     public function smog_index($strText)
     {
@@ -117,7 +122,8 @@ class TextStatistics
 
     /**
      * Gives the Automated Readability Index of text entered rounded to one digit
-     * @param   strText         Text to be checked
+     * @param   string	$strText         Text to be checked
+     * @return	int|float
      */
     public function automated_readability_index($strText)
     {
@@ -130,7 +136,8 @@ class TextStatistics
 
     /**
      * Gives string length. Tries mb_strlen and if that fails uses regular strlen.
-     * @param   strText      Text to be measured
+     * @param   string	$strText      Text to be measured
+     * @return	int
      */
     public function text_length($strText)
     {
@@ -155,7 +162,8 @@ class TextStatistics
 
     /**
      * Gives letter count (ignores all non-letters). Tries mb_strlen and if that fails uses regular strlen.
-     * @param   strText      Text to be measured
+     * @param   string	$strText      Text to be measured
+     * @return	int
      */
     public function letter_count($strText)
     {
@@ -182,7 +190,8 @@ class TextStatistics
 
     /**
      * Trims, removes line breaks, multiple spaces and generally cleans text before processing.
-     * @param   strText      Text to be transformed
+     * @param   string	$strText      Text to be transformed
+     * @return	string
      */
     protected function clean_text($strText)
     {
@@ -207,7 +216,8 @@ class TextStatistics
 
     /**
      * Converts string to lower case. Tries mb_strtolower and if that fails uses regular strtolower.
-     * @param   strText      Text to be transformed
+     * @param   string	$strText      Text to be transformed
+     * @return	string
      */
     protected function lower_case($strText)
     {
@@ -232,7 +242,8 @@ class TextStatistics
 
     /**
      * Converts string to upper case. Tries mb_strtoupper and if that fails uses regular strtoupper.
-     * @param   strText      Text to be transformed
+     * @param   string	$strText      Text to be transformed
+     * @return	string
      */
     protected function upper_case($strText)
     {
@@ -257,9 +268,10 @@ class TextStatistics
 
     /**
      * Gets portion of string. Tries mb_substr and if that fails uses regular substr.
-     * @param   strText      Text to be cut up
-     * @param   intStart     Start character
-     * @param   intLength    Length
+     * @param   string	$strText      Text to be cut up
+     * @param   int		$intStart     Start character
+     * @param   int		$intLength    Length
+     * @return	string
      */
     protected function substring($strText, $intStart, $intLength)
     {
@@ -284,7 +296,8 @@ class TextStatistics
 
     /**
      * Returns sentence count for text.
-     * @param   strText      Text to be measured
+     * @param   string	$strText      Text to be measured
+     * @return	int
      */
     public function sentence_count($strText)
     {
@@ -301,7 +314,8 @@ class TextStatistics
 
     /**
      * Returns word count for text.
-     * @param   strText      Text to be measured
+     * @param   string	$strText      Text to be measured
+     * @return	int
      */
     public function word_count($strText)
     {
@@ -318,7 +332,8 @@ class TextStatistics
 
     /**
      * Returns average words per sentence for text.
-     * @param   strText      Text to be measured
+     * @param   string	$strText      Text to be measured
+     * @return	int|float
      */
     public function average_words_per_sentence($strText)
     {
@@ -326,12 +341,13 @@ class TextStatistics
         $intSentenceCount = $this->sentence_count($strText);
         $intWordCount = $this->word_count($strText);
 
-        return ($intWordCount / $intSentenceCount);
+        return self::bc_calc($intWordCount, '/', $intSentenceCount);
     }
 
     /**
      * Returns total syllable count for text.
-     * @param   strText      Text to be measured
+     * @param   string	$strText      Text to be measured
+     * @return	int
      */
     public function total_syllables($strText)
     {
@@ -347,7 +363,8 @@ class TextStatistics
 
     /**
      * Returns average syllables per word for text.
-     * @param   strText      Text to be measured
+     * @param   string	$strText      Text to be measured
+     * @return	int|float
      */
     public function average_syllables_per_word($strText)
     {
@@ -359,13 +376,14 @@ class TextStatistics
             $intSyllableCount += $this->syllable_count($arrWords[$i]);
         }
 
-        return ($intSyllableCount / $intWordCount);
+        return self::bc_calc($intSyllableCount, '/', $intWordCount);
     }
 
     /**
      * Returns the number of words with more than three syllables
-     * @param   strText                  Text to be measured
-     * @param   blnCountProperNouns      Boolean - should proper nouns be included in words count
+     * @param   string	$strText                  Text to be measured
+     * @param   bool	$blnCountProperNouns      Boolean - should proper nouns be included in words count
+     * @return	int
      */
     public function words_with_three_syllables($strText, $blnCountProperNouns = true)
     {
@@ -392,8 +410,9 @@ class TextStatistics
 
     /**
      * Returns the percentage of words with more than three syllables
-     * @param   strText      Text to be measured
-     * @param   blnCountProperNouns      Boolean - should proper nouns be included in words count
+     * @param   string	$strText      Text to be measured
+     * @param   bool	$blnCountProperNouns      Boolean - should proper nouns be included in words count
+     * @return	int|float
      */
     public function percentage_words_with_three_syllables($strText, $blnCountProperNouns = true)
     {
@@ -408,7 +427,8 @@ class TextStatistics
     /**
      * Returns the number of syllables in the word.
      * Based in part on Greg Fast's Perl module Lingua::EN::Syllables
-     * @param   strWord      Word to be measured
+     * @param   string	$strWord      Word to be measured
+     * @return	int
      */
     public function syllable_count($strWord)
     {
@@ -516,9 +536,10 @@ class TextStatistics
      * Normalizes score according to min & max allowed. If score larger
      * than max, max is returned. If score less than min, min is returned.
      * Thanks to github.com/lvil
-     * @param   score        Initial score
-     * @param   min     Minimum score allowed
-     * @param   max     Maximum score allowed
+     * @param   int|float	$score   Initial score
+     * @param   int			$min     Minimum score allowed
+     * @param   int			$max     Maximum score allowed
+     * @return	int|float
      */
     public static function normalize_score($score, $min, $max)
     {
