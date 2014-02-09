@@ -35,6 +35,10 @@
 class TextStatistics
 {
     protected $strEncoding = ''; // Used to hold character encoding to be used by object, if set
+    
+    protected $blnMbstring = true; // Efficiency: Is the MB String extension loaded ?
+
+    protected $blnBcmath = true; // Efficiency: Is the BC Math extension loaded ?
 
     /**
      * Constructor.
@@ -48,6 +52,9 @@ class TextStatistics
             // Encoding is given. Use it!
             $this->strEncoding = $strEncoding;
         }
+        
+        $this->blnMbstring = extension_loaded('mbstring');
+        $this->blnBcmath = extension_loaded('bcmath');
     }
 
     /**
@@ -144,7 +151,7 @@ class TextStatistics
         $intTextLength = 0;
         try {
 
-            if (!extension_loaded('mbstring')) {
+            if (!$this->blnMbstring) {
                 throw new Exception('The extension mbstring is not loaded.');
             }
 
@@ -172,7 +179,7 @@ class TextStatistics
         $strText = preg_replace('/[^A-Za-z]+/', '', $strText);
         try {
 
-            if (!extension_loaded('mbstring')) {
+            if (!$this->blnMbstring) {
                 throw new Exception('The extension mbstring is not loaded.');
             }
 
@@ -224,7 +231,7 @@ class TextStatistics
         $strLowerCaseText = '';
         try {
 
-            if (!extension_loaded('mbstring')) {
+            if (!$this->blnMbstring) {
                 throw new Exception('The extension mbstring is not loaded.');
             }
 
@@ -250,7 +257,7 @@ class TextStatistics
         $strUpperCaseText = '';
         try {
 
-            if (!extension_loaded('mbstring')) {
+            if (!$this->blnMbstring) {
                 throw new Exception('The extension mbstring is not loaded.');
             }
 
@@ -278,7 +285,7 @@ class TextStatistics
         $strSubstring = '';
         try {
 
-            if (!extension_loaded('mbstring')) {
+            if (!$this->blnMbstring) {
                 throw new Exception('The extension mbstring is not loaded.');
             }
 
@@ -586,9 +593,7 @@ class TextStatistics
 			return false;
 		}
 
-		$bc = extension_loaded( 'bcmath' );
-
-		if ($bc) {
+		if ($this->blnBcmath) {
 			$number1 = strval( $number1 );
 			$number2 = strval( $number2 );
 		}
@@ -600,25 +605,25 @@ class TextStatistics
 			case '+':
 			case 'add':
 			case 'addition':
-				$result = ($bc) ? bcadd( $number1, $number2, $precision ) /* string */ : ($number1 + $number2);
+				$result = ($this->blnBcmath) ? bcadd( $number1, $number2, $precision ) /* string */ : ($number1 + $number2);
 				break;
 	
 			case '-':
 			case 'sub':
 			case 'subtract':
-				$result = ($bc) ? bcsub( $number1, $number2, $precision ) /* string */ : ($number1 - $number2);
+				$result = ($this->blnBcmath) ? bcsub( $number1, $number2, $precision ) /* string */ : ($number1 - $number2);
 				break;
 	
 			case '*':
 			case 'mul':
 			case 'multiply':
-				$result = ($bc) ? bcmul( $number1, $number2, $precision ) /* string */ : ($number1 * $number2);
+				$result = ($this->blnBcmath) ? bcmul( $number1, $number2, $precision ) /* string */ : ($number1 * $number2);
 				break;
 	
 			case '/':
 			case 'div':
 			case 'divide':
-				if ( $bc ) {
+				if ($this->blnBcmath) {
 					$result = bcdiv( $number1, $number2, $precision ); // string, or NULL if right_operand is 0
 				} else if ($number2 != 0) {
 					$result = $number1 / $number2;
@@ -632,7 +637,7 @@ class TextStatistics
 			case '%':
 			case 'mod':
 			case 'modulus':
-				if ($bc) {
+				if ($this->blnBcmath) {
 					$result = bcmod( $number1, $number2, $precision ); // string, or NULL if modulus is 0.
 				} else if ($number2 != 0) {
 					$result = $number1 % $number2;
@@ -647,7 +652,7 @@ class TextStatistics
 			case 'comp':
 			case 'compare':
 				$compare = true;
-				if ($bc) {
+				if ($this->blnBcmath) {
 					$result = bccomp( $number1, $number2, $precision ); // returns int 0, 1 or -1
 				} else {
 					$result = ($number1 == $number2) ? 0 : ( ($number1 > $number2) ? 1 : -1 );
