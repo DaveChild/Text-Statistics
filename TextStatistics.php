@@ -202,6 +202,14 @@ class TextStatistics
      */
     protected function clean_text($strText)
     {
+		static $clean = array();
+		
+		if (isset($clean[$strText])) {
+			return $clean[$strText];
+		}
+
+		$key = $strText;
+
         // all these tags should be preceeded by a full stop.
         $fullStopTags = array('li', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dd');
         foreach ($fullStopTags as $tag) {
@@ -218,7 +226,11 @@ class TextStatistics
         $strText = preg_replace('/[ ]+/', ' ', $strText); // Remove multiple spaces
         $strText = preg_replace_callback('/\. [^ ]+/', create_function('$matches', 'return strtolower($matches[0]);'), $strText); // Lower case all words following terminators (for gunning fog score)
 
-        return trim($strText);
+        $strText = trim($strText);
+        
+        // Cache it and return
+        $clean[$key] = $strText;
+        return $strText;
     }
 
     /**
