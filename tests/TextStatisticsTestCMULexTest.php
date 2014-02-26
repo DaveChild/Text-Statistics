@@ -3,9 +3,9 @@
     // Include PHPUnit
     require_once('PHPUnit/Framework.php');
 
-    // Include the email address validator class
-    require_once('../TextStatistics.php');
-     
+    // Include the TextStatistics class
+    require_once dirname( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'TextStatistics.php';
+
     class TextStatisticsTestCMULex extends PHPUnit_Framework_TestCase {
 
         /*
