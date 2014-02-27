@@ -40,7 +40,9 @@ class TextStatistics
 
     protected static $blnBcmath = true; // Efficiency: Is the BC Math extension loaded ?
 
-    public $normalize = true;
+    public $normalize = true; // Whether ot not to limit scores to defined ranges
+
+    public $debug = false; // Debug mode shows the steps the syllable counter goes through
 
     /**
      * Constructor.
@@ -465,70 +467,218 @@ class TextStatistics
         $strWord = $this->lower_case($strWord);
 
         // Specific common exceptions that don't follow the rule set below are handled individually
-        // array of problem words (with word as key, syllable count as value)
+        // array of problem words (with word as key, syllable count as value).
+        // Common reasons we need to override some words:
+        //   - Trailing 'e' is pronounced
+        //   - Portmanteuas
         $arrProblemWords = array(
-             'simile' => 3
+             'abalone' => 4
+            ,'abare' => 3
+            ,'abed' => 2
+            ,'abruzzese' => 4
+            ,'abbruzzese' => 4
+            ,'aborigine' => 5
+            ,'cafe' => 2
             ,'forever' => 3
+            ,'people' => 2
+            ,'jukebox' => 2
             ,'shoreline' => 2
+            ,'simile' => 3
         );
         if (isset($arrProblemWords[$strWord])) {
             return $arrProblemWords[$strWord];
         }
+        // Try singular
+        $singularWord = self::unpluralise($strWord);
+        if ($singularWord != $strWord) {
+            if (isset($arrProblemWords[$singularWord])) {
+                return $arrProblemWords[$singularWord];
+            }
+        }
 
         // These syllables would be counted as two but should be one
         $arrSubSyllables = array(
-             'cial'
+             'cia(l|$)'
             ,'tia'
             ,'cius'
             ,'cious'
             ,'giu'
-            ,'ion'
+            ,'[aeiouy][^aeiouy]ion'
             ,'iou'
             ,'sia$'
-            ,'[^aeiuoyt]{2,}ed$'
+            ,'[^aeiuoycgltdb]{2,}ed$'
             ,'.ely$'
-            ,'[cg]h?e[rsd]?$'
-            ,'rved?$'
-            ,'[aeiouy][dt]es?$'
-            ,'[aeiouy][^aeiouydt]e[rsd]?$'
+            //,'[cg]h?ed?$'
+            //,'rved?$'
+            //,'[aeiouy][dt]es?$'
             //,'^[dr]e[aeiou][^aeiou]+$' // Sorts out deal, deign etc
-            ,'[aeiouy]rse$' // Purse, hearse
+            //,'[aeiouy]rse$' // Purse, hearse
+            ,'^jua'
+            //,'nne[ds]?$' // canadienne
+            ,'uai' // acquainted
+            ,'eau' // champeau
+            //,'pagne[ds]?$' // champagne
+            //,'[aeiouy][^aeiuoytdbcgrnzs]h?e[rsd]?$'
+            // The following detects words ending with a soft e ending. Don't
+            // mess with it unless you absolutely have to! The following
+            // is a list of words you can use to test a new version of
+            // this rule (add 'r', 's' and 'd' where possible to test
+            // fully):
+            //   - absolve
+            //   - acquiesce
+            //   - audience
+            //   - ache
+            //   - acquire
+            //   - brunelle
+            //   - byrne
+            //   - canadienne
+            //   - coughed
+            //   - curved
+            //   - champagne
+            //   - designate
+            //   - force
+            //   - lace
+            //   - late
+            //   - lathe
+            //   - make
+            //   - relayed
+            //   - scrounge
+            //   - side
+            //   - sideline
+            //   - some
+            //   - wide
+            ,'[aeiouy](b|c|ch|d|dg|f|g|gh|gn|k|l|ll|lv|m|mm|n|nc|ng|nn|p|r|rc|rn|rs|rv|s|sc|sk|sl|squ|ss|t|th|v|y)e$'
+            // For soft e endings with a "d". Test words:
+            //   - crunched
+            //   - forced
+            //   - hated
+            //   - sided
+            //   - sidelined
+            //   - unexploded
+            //   - unexplored
+            //   - scrounged
+            //   - squelched
+            //   - forced
+            ,'[aeiouy](b|c|ch|dg|f|g|gh|gn|k|l|lch|ll|lv|m|mm|n|nc|ng|nch|nn|p|r|rc|rn|rs|rv|s|sc|sk|sl|squ|ss|th|v|y)ed$'
+            // For soft e endings with a "s". Test words:
+            //   - absences
+            //   - accomplices
+            //   - acknowledges
+            //   - byrnes
+            //   - crunches
+            //   - forces
+            //   - scrounges
+            //   - squelches
+            ,'[aeiouy](b|ch|d|f|g|gh|gn|k|l|lch|ll|lv|m|mm|n|nch|nn|p|r|rn|rs|rv|s|sc|sk|sl|squ|ss|t|th|v|y)es$'
         );
 
         // These syllables would be counted as one but should be two
         $arrAddSyllables = array(
-             'ia'
+             '([^s]|^)ia'
             ,'riet'
-            ,'dien'
+            ,'dien' // audience
             ,'iu'
             ,'io'
+            ,'eo'
             ,'ii'
+            ,'[ou]a$'
             ,'[aeiouym]bl$'
             ,'[aeiou]{3}'
+            ,'[aeiou]y[aeiou]'
             ,'^mc'
             ,'ism$'
+            ,'asm$'
+            ,'thm$'
             ,'([^aeiouy])\1l$'
             ,'[^l]lien'
             ,'^coa[dglx].'
             ,'[^gq]ua[^auieo]'
             ,'dnt$'
             ,'uity$'
-            ,'ie(r|st)$'
+            ,'[^aeiouy]ie(r|st|t)$'
+            ,'eings?$'
+            ,'[aeiouy]sh?e[rsd]$'
+            ,'iell'
+            ,'dea$'
+            ,'real' // real, cereal
+            ,'[^aeiou]y[ae]' // bryan, byerley
         );
 
         // Single syllable prefixes and suffixes
         $arrPrefixSuffix = array(
              '/^un/'
             ,'/^fore/'
+            ,'/^ware/'
+            ,'/^none?/'
+            ,'/^out/'
+            ,'/^post/'
+            ,'/^sub/'
+            ,'/^pre/'
+            ,'/^pro/'
+            ,'/^dis/'
+            ,'/^side/'
             ,'/ly$/'
             ,'/less$/'
             ,'/ful$/'
             ,'/ers?$/'
-            ,'/ings?$/'
+            ,'/ness$/'
+            ,'/cians?$/'
+            ,'/ments?$/'
+            ,'/ettes?$/'
+            ,'/villes?$/'
+            ,'/ships?$/'
+            ,'/sides?$/'
+            ,'/ports?$/'
+            ,'/shires?$/'
         );
+
+        // Double syllable prefixes and suffixes
+        $arrDoublePrefixSuffix = array(
+             '/^above/'
+            ,'/^ant[ie]/'
+            ,'/^counter/'
+            ,'/^hyper/'
+            ,'/^in[ft]ra/'
+            ,'/^inter/'
+            ,'/^over/'
+            ,'/^semi/'
+            ,'/^ultra/'
+            ,'/^under/'
+            ,'/^extra/'
+            ,'/^dia/'
+            ,'/^micro/'
+            ,'/^mega/'
+            ,'/^kilo/'
+            ,'/^pico/'
+            ,'/^nano/'
+            ,'/^macro/'
+            ,'/berry$/'
+            ,'/woman$/'
+            ,'/women$/'
+        );
+
+        // Triple syllable prefixes and suffixes
+        $arrTriplePrefixSuffix = array(
+             '/ology$/'
+            ,'/ologist$/'
+            ,'/onomy$/'
+            ,'/onomist$/'
+        );
+
+        if ($this->debug) {
+            echo '<pre>Counting syllables for: "' . $strWord . '"' . "\r\n";
+        }
 
         // Remove prefixes and suffixes and count how many were taken
         $strWord = preg_replace($arrPrefixSuffix, '', $strWord, -1, $intPrefixSuffixCount);
+        $strWord = preg_replace($arrDoublePrefixSuffix, '', $strWord, -1, $intDoublePrefixSuffixCount);
+        $strWord = preg_replace($arrTriplePrefixSuffix, '', $strWord, -1, $intTriplePrefixSuffixCount);
+        if ($this->debug) {
+            if (($intPrefixSuffixCount + $intDoublePrefixSuffixCount + $intTriplePrefixSuffixCount) > 0) {
+                echo 'After Prefix and Suffix Removal: "' . $strWord . '"' . "\r\n";
+                echo '(' . $intPrefixSuffixCount . ' * 1 syllable, ' . $intDoublePrefixSuffixCount . ' * 2 syllables, ' . $intTriplePrefixSuffixCount . ' * 3 syllables)' . "\r\n";
+            }
+        }
 
         // Removed non-word characters from word
         $strWord = preg_replace('/[^a-z]/is', '', $strWord);
@@ -536,20 +686,43 @@ class TextStatistics
         $intWordPartCount = 0;
         foreach ($arrWordParts as $strWordPart) {
             if ($strWordPart <> '') {
+                if ($this->debug) {
+                    echo 'Counting: "' . $strWordPart . '"' . "\r\n";
+                }
                 $intWordPartCount++;
             }
         }
 
         // Some syllables do not follow normal rules - check for them
         // Thanks to Joe Kovar for correcting a bug in the following lines
-        $intSyllableCount = $intWordPartCount + $intPrefixSuffixCount;
+        $intSyllableCount = $intWordPartCount + $intPrefixSuffixCount + (2 * $intDoublePrefixSuffixCount) + (3 * $intTriplePrefixSuffixCount);
+        if ($this->debug) {
+            echo 'Syllables by Vowel Count: "' . $intSyllableCount . '"' . "\r\n";
+        }
+
         foreach ($arrSubSyllables as $strSyllable) {
+            $_intSyllableCount = $intSyllableCount;
             $intSyllableCount -= preg_match('/' . $strSyllable . '/', $strWord);
+            if ($this->debug) {
+                if ($_intSyllableCount != $intSyllableCount) {
+                    echo 'Subtracting: "' . $strSyllable . '"' . "\r\n";
+                }
+            }
         }
         foreach ($arrAddSyllables as $strSyllable) {
+            $_intSyllableCount = $intSyllableCount;
             $intSyllableCount += preg_match('/' . $strSyllable . '/', $strWord);
+            if ($this->debug) {
+                if ($_intSyllableCount != $intSyllableCount) {
+                    echo 'Adding: "' . $strSyllable . '"' . "\r\n";
+                }
+            }
         }
         $intSyllableCount = ($intSyllableCount == 0) ? 1 : $intSyllableCount;
+
+        if ($this->debug) {
+            echo 'Result: "' . $intSyllableCount . '".</pre>';
+        }
 
         return $intSyllableCount;
     }
@@ -690,5 +863,137 @@ class TextStatistics
         }
 
         return false;
+    }
+
+    /**
+     * Singularising and Pluralising functions from following URL, released
+     * under an MIT license and used with thanks:
+     * http://kuwamoto.org/2007/12/17/improved-pluralizing-in-php-actionscript-and-ror/
+     */
+    static $plural = array(
+        '/(quiz)$/i'               => "$1zes",
+        '/^(ox)$/i'                => "$1en",
+        '/([m|l])ouse$/i'          => "$1ice",
+        '/(matr|vert|ind)ix|ex$/i' => "$1ices",
+        '/(x|ch|ss|sh)$/i'         => "$1es",
+        '/([^aeiouy]|qu)y$/i'      => "$1ies",
+        '/(hive)$/i'               => "$1s",
+        '/(?:([^f])fe|([lr])f)$/i' => "$1$2ves",
+        '/(shea|lea|loa|thie)f$/i' => "$1ves",
+        '/sis$/i'                  => "ses",
+        '/([ti])um$/i'             => "$1a",
+        '/(tomat|potat|ech|her|vet)o$/i'=> "$1oes",
+        '/(bu)s$/i'                => "$1ses",
+        '/(alias)$/i'              => "$1es",
+        '/(octop)us$/i'            => "$1i",
+        '/(ax|test)is$/i'          => "$1es",
+        '/(us)$/i'                 => "$1es",
+        '/s$/i'                    => "s",
+        '/$/'                      => "s"
+    );
+
+    static $singular = array(
+        '/(quiz)zes$/i'             => "$1",
+        '/(matr)ices$/i'            => "$1ix",
+        '/(vert|ind)ices$/i'        => "$1ex",
+        '/^(ox)en$/i'               => "$1",
+        '/(alias)es$/i'             => "$1",
+        '/(octop|vir)i$/i'          => "$1us",
+        '/(cris|ax|test)es$/i'      => "$1is",
+        '/(shoe)s$/i'               => "$1",
+        '/(o)es$/i'                 => "$1",
+        '/(bus)es$/i'               => "$1",
+        '/([m|l])ice$/i'            => "$1ouse",
+        '/(x|ch|ss|sh)es$/i'        => "$1",
+        '/(m)ovies$/i'              => "$1ovie",
+        '/(s)eries$/i'              => "$1eries",
+        '/([^aeiouy]|qu)ies$/i'     => "$1y",
+        '/([lr])ves$/i'             => "$1f",
+        '/(tive)s$/i'               => "$1",
+        '/(hive)s$/i'               => "$1",
+        '/(li|wi|kni)ves$/i'        => "$1fe",
+        '/(shea|loa|lea|thie)ves$/i'=> "$1f",
+        '/(^analy)ses$/i'           => "$1sis",
+        '/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i'  => "$1$2sis",
+        '/([ti])a$/i'               => "$1um",
+        '/(n)ews$/i'                => "$1ews",
+        '/(h|bl)ouses$/i'           => "$1ouse",
+        '/(corpse)s$/i'             => "$1",
+        '/(us)es$/i'                => "$1",
+        '/s$/i'                     => ""
+    );
+
+    static $irregular = array(
+        'move'   => 'moves',
+        'foot'   => 'feet',
+        'goose'  => 'geese',
+        'sex'    => 'sexes',
+        'child'  => 'children',
+        'man'    => 'men',
+        'tooth'  => 'teeth',
+        'person' => 'people'
+    );
+
+    static $uncountable = array(
+        'sheep',
+        'fish',
+        'deer',
+        'beef',
+        'css',
+        'cs',
+        'series',
+        'species',
+        'money',
+        'rice',
+        'information',
+        'equipment'
+    );
+
+    public static function pluralise($string) {
+        // save some time in the case that singular and plural are the same
+        if (in_array(strtolower($string), self::$uncountable)) {
+            return $string;
+        }
+
+        // check for irregular singular forms
+        foreach ( self::$irregular as $pattern => $result ) {
+            $pattern = '/' . $pattern . '$/i';
+            if (preg_match($pattern, $string)) {
+                return preg_replace($pattern, $result, $string);
+            }
+        }
+
+        // check for matches using regular expressions
+        foreach (self::$plural as $pattern => $result) {
+            if (preg_match($pattern, $string)) {
+                return preg_replace($pattern, $result, $string);
+            }
+        }
+
+        return $string;
+    }
+
+    public static function unpluralise($string) {
+        // save some time in the case that singular and plural are the same
+        if (in_array(strtolower($string), self::$uncountable)) {
+            return $string;
+        }
+
+        // check for irregular plural forms
+        foreach (self::$irregular as $result => $pattern) {
+            $pattern = '/' . $pattern . '$/i';
+            if (preg_match($pattern, $string)) {
+                return preg_replace($pattern, $result, $string);
+            }
+        }
+
+        // check for matches using regular expressions
+        foreach (self::$singular as $pattern => $result) {
+            if (preg_match($pattern, $string)) {
+                return preg_replace($pattern, $result, $string);
+            }
+        }
+
+        return $string;
     }
 }
