@@ -40,6 +40,8 @@ class TextStatistics
 
     protected static $blnBcmath = true; // Efficiency: Is the BC Math extension loaded ?
 
+    public $normalize = true;
+
     /**
      * Constructor.
      *
@@ -66,9 +68,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        $score = self::bc_calc(206.835, '-', self::bc_calc(self::bc_calc(1.015, '*', $this->average_words_per_sentence($strText)), '-', self::bc_calc(84.6, '*', $this->average_syllables_per_word($strText))), true, 1);
+        $score = self::bc_calc(self::bc_calc(206.835, '-', self::bc_calc(1.015, '*', $this->average_words_per_sentence($strText))), '-', self::bc_calc(84.6, '*', $this->average_syllables_per_word($strText)));
 
-        return self::normalize_score($score, 0, 100);
+        return $this->normalize_score($score, 0, 100);
     }
 
     /**
@@ -82,7 +84,7 @@ class TextStatistics
 
         $score = self::bc_calc(self::bc_calc(0.39, '*', $this->average_words_per_sentence($strText)), '+', self::bc_calc(self::bc_calc(11.8, '*', $this->average_syllables_per_word($strText)), '-', 15.59), true, 1);
 
-        return self::normalize_score($score, 0, 12);
+        return $this->normalize_score($score, 0, 12);
     }
 
     /**
@@ -94,9 +96,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        $score = self::bc_calc($this->average_words_per_sentence($strText), '+', self::bc_calc($this->percentage_words_with_three_syllables($strText, false), '*', 0.4), true, 1);
+        $score = self::bc_calc(self::bc_calc($this->average_words_per_sentence($strText), '+', $this->percentage_words_with_three_syllables($strText, false)), '*', '0.4');
 
-        return self::normalize_score($score, 0, 19);
+        return $this->normalize_score($score, 0, 19);
     }
 
     /**
@@ -108,9 +110,9 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText);
 
-        $score = self::bc_calc(self::bc_calc(5.89, '*', self::bc_calc($this->letter_count($strText), '/', $this->word_count($strText))), '-', self::bc_calc(self::bc_calc(0.3, '*', self::bc_calc($this->sentence_count($strText), '/', $this->word_count($strText))), '-', 15.8), true, 1);
+        $score = self::bc_calc(self::bc_calc(self::bc_calc(5.89, '*', self::bc_calc($this->letter_count($strText), '/', $this->word_count($strText))), '-', self::bc_calc(0.3, '*', self::bc_calc($this->sentence_count($strText), '/', $this->word_count($strText)))), '-', 15.8);
 
-        return self::normalize_score($score, 0, 12);
+        return $this->normalize_score($score, 0, 12);
     }
 
     /**
@@ -124,7 +126,7 @@ class TextStatistics
 
         $score = self::bc_calc(1.043, '*', sqrt(self::bc_calc(self::bc_calc($this->words_with_three_syllables($strText), '*', self::bc_calc(30, '/', $this->sentence_count($strText))), '+', 3.1291)), true, 1);
 
-        return self::normalize_score($score, 0, 12);
+        return $this->normalize_score($score, 0, 12);
     }
 
     /**
@@ -138,7 +140,7 @@ class TextStatistics
 
         $score = self::bc_calc(self::bc_calc(4.71, '*', self::bc_calc($this->letter_count($strText), '/', $this->word_count($strText))), '+', self::bc_calc(self::bc_calc(0.5, '*', self::bc_calc($this->word_count($strText), '/', $this->sentence_count($strText))), '-', 21.43), true, 1);
 
-        return self::normalize_score($score, 0, 12);
+        return $this->normalize_score($score, 0, 12);
     }
 
     /**
@@ -224,7 +226,7 @@ class TextStatistics
         $strText = trim(preg_replace('/[ ]*([\.])/', '$1 ', $strText)); // Pad sentence terminators
         $strText = preg_replace('/ [0-9]+ /', ' ', ' ' . $strText . ' '); // Remove "words" comprised only of numbers
         $strText = preg_replace('/[ ]+/', ' ', $strText); // Remove multiple spaces
-        $strText = preg_replace_callback('/\. [^ ]+/', create_function('$matches', 'return strtolower($matches[0]);'), $strText); // Lower case all words following terminators (for gunning fog score)
+        $strText = preg_replace_callback('/\. [^ ]+?/', create_function('$matches', 'return strtolower($matches[0]);'), $strText); // Lower case all words following terminators (for gunning fog score)
 
         $strText = trim($strText);
 
@@ -457,7 +459,7 @@ class TextStatistics
         }
 
         // Should be no non-alpha characters
-        $strWord = preg_replace('/[^A_Za-z]/', '', $strWord);
+        $strWord = preg_replace('/[^A-Za-z]/', '', $strWord);
 
         $intSyllableCount = 0;
         $strWord = $this->lower_case($strWord);
@@ -555,14 +557,19 @@ class TextStatistics
     /**
      * Normalizes score according to min & max allowed. If score larger
      * than max, max is returned. If score less than min, min is returned.
-     * Thanks to github.com/lvil
+     * Also rounds result to specified precision.
+     * Thanks to github.com/lvil.
      * @param   int|float  $score   Initial score
      * @param   int        $min     Minimum score allowed
      * @param   int        $max     Maximum score allowed
      * @return  int|float
      */
-    public static function normalize_score($score, $min, $max)
+    public function normalize_score($score, $min, $max, $dps = 1)
     {
+        $score = self::bc_calc($score, '+', 0, true, $dps); // Round
+        if (!$this->normalize) {
+            return $score;
+        }
         if ($score > $max) {
             $score = $max;
         } elseif ($score < $min) {
