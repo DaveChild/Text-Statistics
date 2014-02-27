@@ -34,24 +34,24 @@
 
 class TextStatistics
 {
-	/**
-	 * @var string $strEncoding Used to hold character encoding to be used by object, if set
-	 */
+    /**
+     * @var string $strEncoding Used to hold character encoding to be used by object, if set
+     */
     protected $strEncoding = '';
 
-	/**
-	 * @var string $blnMbstring Efficiency: Is the MB String extension loaded ?
-	 */
+    /**
+     * @var string $blnMbstring Efficiency: Is the MB String extension loaded ?
+     */
     protected $blnMbstring = true;
 
-	/**
-	 * @var string $blnBcmath Efficiency: Is the BC Math extension loaded ?
-	 */
+    /**
+     * @var string $blnBcmath Efficiency: Is the BC Math extension loaded ?
+     */
     protected static $blnBcmath = true;
 
-	/**
-	 * @var bool $normalize Should the result be normalized ?
-	 */
+    /**
+     * @var bool $normalize Should the result be normalized ?
+     */
     public $normalize = true;
 
     /**
