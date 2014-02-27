@@ -1,7 +1,7 @@
 <?php
 
 // Include the text statistics class
-require_once dirname( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'TextStatistics.php';
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TextStatistics.php';
 
 class TextStatisticsTest extends PHPUnit_Framework_TestCase
 {
@@ -183,7 +183,8 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, number_format($this->TextStatistics->percentage_words_with_three_syllables('no long valid words in this sentence because the test ignores proper case words like this Behemoth', false)));
     }
 
-    public function testTextLengthCheck() {
+    public function testTextLengthCheck()
+    {
         $this->assertEquals(1, $this->TextStatistics->letter_count('a'));
         $this->assertEquals(0, $this->TextStatistics->letter_count(''));
         $this->assertEquals(46, $this->TextStatistics->letter_count('this sentence has 30 characters, not including the digits'));
@@ -191,7 +192,8 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
 
     /* Test Sentences
     -------------------- */
-    public function testSentenceCount() {
+    public function testSentenceCount()
+    {
         $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence'));
         $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence.'));
         $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence!'));
@@ -206,7 +208,8 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence (but just one).'));
     }
 
-    public function testAverageWordsPerSentence() {
+    public function testAverageWordsPerSentence()
+    {
         $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This is a sentence'));
         $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This is a sentence.'));
         $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This is a sentence. '));
