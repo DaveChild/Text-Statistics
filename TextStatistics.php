@@ -178,7 +178,7 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText); // To clear out newlines etc
         $intTextLength = 0;
-        $strText = preg_replace('/[^A-Za-z]+/', '', $strText);
+        $strText = preg_replace('`[^A-Za-z]+`', '', $strText);
         try {
 
             if (!$this->blnMbstring) {
@@ -218,15 +218,15 @@ class TextStatistics
             $strText = str_ireplace('</'.$tag.'>', '.', $strText);
         }
         $strText = strip_tags($strText);
-        $strText = preg_replace('/[",:;()-]/', ' ', $strText); // Replace commas, hyphens, quotes etc (count them as spaces)
-        $strText = preg_replace('/[\.!?]/', '.', $strText); // Unify terminators
+        $strText = preg_replace('`[",:;()-]`', ' ', $strText); // Replace commas, hyphens, quotes etc (count them as spaces)
+        $strText = preg_replace('`[\.!?]`', '.', $strText); // Unify terminators
         $strText = trim($strText) . '.'; // Add final terminator, just in case it's missing.
-        $strText = preg_replace('/[ ]*(\n|\r\n|\r)[ ]*/', ' ', $strText); // Replace new lines with spaces
-        $strText = preg_replace('/([\.])[\. ]+/', '$1', $strText); // Check for duplicated terminators
-        $strText = trim(preg_replace('/[ ]*([\.])/', '$1 ', $strText)); // Pad sentence terminators
-        $strText = preg_replace('/ [0-9]+ /', ' ', ' ' . $strText . ' '); // Remove "words" comprised only of numbers
-        $strText = preg_replace('/[ ]+/', ' ', $strText); // Remove multiple spaces
-        $strText = preg_replace_callback('/\. [^ ]+?/', create_function('$matches', 'return strtolower($matches[0]);'), $strText); // Lower case all words following terminators (for gunning fog score)
+        $strText = preg_replace('`[ ]*(\n|\r\n|\r)[ ]*`', ' ', $strText); // Replace new lines with spaces
+        $strText = preg_replace('`([\.])[\. ]+`', '$1', $strText); // Check for duplicated terminators
+        $strText = trim(preg_replace('`[ ]*([\.])`', '$1 ', $strText)); // Pad sentence terminators
+        $strText = preg_replace('` [0-9]+ `', ' ', ' ' . $strText . ' '); // Remove "words" comprised only of numbers
+        $strText = preg_replace('`[ ]+`', ' ', $strText); // Remove multiple spaces
+        $strText = preg_replace_callback('`\. [^ ]+?`', create_function('$matches', 'return strtolower($matches[0]);'), $strText); // Lower case all words following terminators (for gunning fog score)
 
         $strText = trim($strText);
 
@@ -328,7 +328,7 @@ class TextStatistics
 
         $strText = $this->clean_text($strText);
         // Will be tripped up by "Mr." or "U.K.". Not a major concern at this point.
-        $intSentences = max(1, $this->text_length(preg_replace('/[^\.!?]/', '', $strText)));
+        $intSentences = max(1, $this->text_length(preg_replace('`[^\.!?]`', '', $strText)));
 
         return $intSentences;
     }
@@ -346,7 +346,7 @@ class TextStatistics
 
         $strText = $this->clean_text($strText);
         // Will be tripped by em dashes with spaces either side, among other similar characters
-        $intWords = 1 + $this->text_length(preg_replace('/[^ ]/', '', $strText)); // Space count + 1 is word count
+        $intWords = 1 + $this->text_length(preg_replace('`[^ ]`', '', $strText)); // Space count + 1 is word count
 
         return $intWords;
     }
@@ -459,7 +459,7 @@ class TextStatistics
         }
 
         // Should be no non-alpha characters
-        $strWord = preg_replace('/[^A-Za-z]/', '', $strWord);
+        $strWord = preg_replace('`[^A-Za-z]`', '', $strWord);
 
         $intSyllableCount = 0;
         $strWord = $this->lower_case($strWord);
@@ -518,21 +518,21 @@ class TextStatistics
 
         // Single syllable prefixes and suffixes
         $arrPrefixSuffix = array(
-             '/^un/'
-            ,'/^fore/'
-            ,'/ly$/'
-            ,'/less$/'
-            ,'/ful$/'
-            ,'/ers?$/'
-            ,'/ings?$/'
+             '`^un`'
+            ,'`^fore`'
+            ,'`ly$`'
+            ,'`less$`'
+            ,'`ful$`'
+            ,'`ers?$`'
+            ,'`ings?$`'
         );
 
         // Remove prefixes and suffixes and count how many were taken
         $strWord = preg_replace($arrPrefixSuffix, '', $strWord, -1, $intPrefixSuffixCount);
 
         // Removed non-word characters from word
-        $strWord = preg_replace('/[^a-z]/is', '', $strWord);
-        $arrWordParts = preg_split('/[^aeiouy]+/', $strWord);
+        $strWord = preg_replace('`[^a-z]`is', '', $strWord);
+        $arrWordParts = preg_split('`[^aeiouy]+`', $strWord);
         $intWordPartCount = 0;
         foreach ($arrWordParts as $strWordPart) {
             if ($strWordPart <> '') {
@@ -544,10 +544,10 @@ class TextStatistics
         // Thanks to Joe Kovar for correcting a bug in the following lines
         $intSyllableCount = $intWordPartCount + $intPrefixSuffixCount;
         foreach ($arrSubSyllables as $strSyllable) {
-            $intSyllableCount -= preg_match('/' . $strSyllable . '/', $strWord);
+            $intSyllableCount -= preg_match('`' . $strSyllable . '`', $strWord);
         }
         foreach ($arrAddSyllables as $strSyllable) {
-            $intSyllableCount += preg_match('/' . $strSyllable . '/', $strWord);
+            $intSyllableCount += preg_match('`' . $strSyllable . '`', $strWord);
         }
         $intSyllableCount = ($intSyllableCount == 0) ? 1 : $intSyllableCount;
 
