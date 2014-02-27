@@ -206,11 +206,11 @@ class TextStatistics
     {
         static $clean = array();
 
-		$key = sha1($strText);
+        $key = sha1($strText);
 
-		if (isset($clean[$key])) {
-			return $clean[$key];
-		}
+        if (isset($clean[$key])) {
+            return $clean[$key];
+        }
 
         // all these tags should be preceeded by a full stop.
         $fullStopTags = array('li', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dd');
