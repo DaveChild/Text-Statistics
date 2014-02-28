@@ -198,7 +198,7 @@ class TextStatistics
     {
         $strText = $this->clean_text($strText); // To clear out newlines etc
         $intTextLength = 0;
-        $strText = preg_replace('/[^A-Za-z]+/', '', $strText);
+        $strText = preg_replace('`[^A-Za-z]+`', '', $strText);
         try {
 
             if (!$this->blnMbstring) {
@@ -239,15 +239,15 @@ class TextStatistics
             $strText = str_ireplace('</'.$tag.'>', '.', $strText);
         }
         $strText = strip_tags($strText);
-        $strText = preg_replace('/[",:;()-]/', ' ', $strText); // Replace commas, hyphens, quotes etc (count them as spaces)
-        $strText = preg_replace('/[\.!?]/', '.', $strText); // Unify terminators
+        $strText = preg_replace('`[",:;()-]`', ' ', $strText); // Replace commas, hyphens, quotes etc (count them as spaces)
+        $strText = preg_replace('`[\.!?]`', '.', $strText); // Unify terminators
         $strText = trim($strText) . '.'; // Add final terminator, just in case it's missing.
-        $strText = preg_replace('/[ ]*(\n|\r\n|\r)[ ]*/', ' ', $strText); // Replace new lines with spaces
-        $strText = preg_replace('/([\.])[\. ]+/', '$1', $strText); // Check for duplicated terminators
-        $strText = trim(preg_replace('/[ ]*([\.])/', '$1 ', $strText)); // Pad sentence terminators
-        $strText = preg_replace('/ [0-9]+ /', ' ', ' ' . $strText . ' '); // Remove "words" comprised only of numbers
-        $strText = preg_replace('/[ ]+/', ' ', $strText); // Remove multiple spaces
-        $strText = preg_replace_callback('/\. [^ ]+?/', create_function('$matches', 'return strtolower($matches[0]);'), $strText); // Lower case all words following terminators (for gunning fog score)
+        $strText = preg_replace('`[ ]*(\n|\r\n|\r)[ ]*`', ' ', $strText); // Replace new lines with spaces
+        $strText = preg_replace('`([\.])[\. ]+`', '$1', $strText); // Check for duplicated terminators
+        $strText = trim(preg_replace('`[ ]*([\.])`', '$1 ', $strText)); // Pad sentence terminators
+        $strText = preg_replace('` [0-9]+ `', ' ', ' ' . $strText . ' '); // Remove "words" comprised only of numbers
+        $strText = preg_replace('`[ ]+`', ' ', $strText); // Remove multiple spaces
+        $strText = preg_replace_callback('`\. [^ ]+?`', create_function('$matches', 'return strtolower($matches[0]);'), $strText); // Lower case all words following terminators (for gunning fog score)
 
         $strText = trim($strText);
 
@@ -349,7 +349,7 @@ class TextStatistics
 
         $strText = $this->clean_text($strText);
         // Will be tripped up by "Mr." or "U.K.". Not a major concern at this point.
-        $intSentences = max(1, $this->text_length(preg_replace('/[^\.!?]/', '', $strText)));
+        $intSentences = max(1, $this->text_length(preg_replace('`[^\.!?]`', '', $strText)));
 
         return $intSentences;
     }
@@ -367,7 +367,7 @@ class TextStatistics
 
         $strText = $this->clean_text($strText);
         // Will be tripped by em dashes with spaces either side, among other similar characters
-        $intWords = 1 + $this->text_length(preg_replace('/[^ ]/', '', $strText)); // Space count + 1 is word count
+        $intWords = 1 + $this->text_length(preg_replace('`[^ ]`', '', $strText)); // Space count + 1 is word count
 
         return $intWords;
     }
@@ -480,7 +480,7 @@ class TextStatistics
         }
 
         // Should be no non-alpha characters
-        $strWord = preg_replace('/[^A-Za-z]/', '', $strWord);
+        $strWord = preg_replace('`[^A-Za-z]`', '', $strWord);
 
         $intSyllableCount = 0;
         $strWord = $this->lower_case($strWord);
@@ -625,63 +625,63 @@ class TextStatistics
 
         // Single syllable prefixes and suffixes
         $arrPrefixSuffix = array(
-             '/^un/'
-            ,'/^fore/'
-            ,'/^ware/'
-            ,'/^none?/'
-            ,'/^out/'
-            ,'/^post/'
-            ,'/^sub/'
-            ,'/^pre/'
-            ,'/^pro/'
-            ,'/^dis/'
-            ,'/^side/'
-            ,'/ly$/'
-            ,'/less$/'
-            ,'/ful$/'
-            ,'/ers?$/'
-            ,'/ness$/'
-            ,'/cians?$/'
-            ,'/ments?$/'
-            ,'/ettes?$/'
-            ,'/villes?$/'
-            ,'/ships?$/'
-            ,'/sides?$/'
-            ,'/ports?$/'
-            ,'/shires?$/'
+             '`^un`'
+            ,'`^fore`'
+            ,'`^ware`'
+            ,'`^none?`'
+            ,'`^out`'
+            ,'`^post`'
+            ,'`^sub`'
+            ,'`^pre`'
+            ,'`^pro`'
+            ,'`^dis`'
+            ,'`^side`'
+            ,'`ly$`'
+            ,'`less$`'
+            ,'`ful$`'
+            ,'`ers?$`'
+            ,'`ness$`'
+            ,'`cians?$`'
+            ,'`ments?$`'
+            ,'`ettes?$`'
+            ,'`villes?$`'
+            ,'`ships?$`'
+            ,'`sides?$`'
+            ,'`ports?$`'
+            ,'`shires?$`'
         );
 
         // Double syllable prefixes and suffixes
         $arrDoublePrefixSuffix = array(
-             '/^above/'
-            ,'/^ant[ie]/'
-            ,'/^counter/'
-            ,'/^hyper/'
-            ,'/^in[ft]ra/'
-            ,'/^inter/'
-            ,'/^over/'
-            ,'/^semi/'
-            ,'/^ultra/'
-            ,'/^under/'
-            ,'/^extra/'
-            ,'/^dia/'
-            ,'/^micro/'
-            ,'/^mega/'
-            ,'/^kilo/'
-            ,'/^pico/'
-            ,'/^nano/'
-            ,'/^macro/'
-            ,'/berry$/'
-            ,'/woman$/'
-            ,'/women$/'
+             '`^above`'
+            ,'`^ant[ie]`'
+            ,'`^counter`'
+            ,'`^hyper`'
+            ,'`^in[ft]ra`'
+            ,'`^inter`'
+            ,'`^over`'
+            ,'`^semi`'
+            ,'`^ultra`'
+            ,'`^under`'
+            ,'`^extra`'
+            ,'`^dia`'
+            ,'`^micro`'
+            ,'`^mega`'
+            ,'`^kilo`'
+            ,'`^pico`'
+            ,'`^nano`'
+            ,'`^macro`'
+            ,'`berry$`'
+            ,'`woman$`'
+            ,'`women$`'
         );
 
         // Triple syllable prefixes and suffixes
         $arrTriplePrefixSuffix = array(
-             '/ology$/'
-            ,'/ologist$/'
-            ,'/onomy$/'
-            ,'/onomist$/'
+             '`ology$`'
+            ,'`ologist$`'
+            ,'`onomy$`'
+            ,'`onomist$`'
         );
 
         if ($this->debug) {
@@ -700,8 +700,8 @@ class TextStatistics
         }
 
         // Removed non-word characters from word
-        $strWord = preg_replace('/[^a-z]/is', '', $strWord);
-        $arrWordParts = preg_split('/[^aeiouy]+/', $strWord);
+        $strWord = preg_replace('`[^a-z]`is', '', $strWord);
+        $arrWordParts = preg_split('`[^aeiouy]+`', $strWord);
         $intWordPartCount = 0;
         foreach ($arrWordParts as $strWordPart) {
             if ($strWordPart <> '') {
@@ -721,7 +721,7 @@ class TextStatistics
 
         foreach ($arrSubSyllables as $strSyllable) {
             $_intSyllableCount = $intSyllableCount;
-            $intSyllableCount -= preg_match('/' . $strSyllable . '/', $strWord);
+            $intSyllableCount -= preg_match('`' . $strSyllable . '`', $strWord);
             if ($this->debug) {
                 if ($_intSyllableCount != $intSyllableCount) {
                     echo 'Subtracting: "' . $strSyllable . '"' . "\r\n";
@@ -730,7 +730,7 @@ class TextStatistics
         }
         foreach ($arrAddSyllables as $strSyllable) {
             $_intSyllableCount = $intSyllableCount;
-            $intSyllableCount += preg_match('/' . $strSyllable . '/', $strWord);
+            $intSyllableCount += preg_match('`' . $strSyllable . '`', $strWord);
             if ($this->debug) {
                 if ($_intSyllableCount != $intSyllableCount) {
                     echo 'Adding: "' . $strSyllable . '"' . "\r\n";
@@ -889,7 +889,7 @@ class TextStatistics
      * under an MIT license and used with thanks:
      * http://kuwamoto.org/2007/12/17/improved-pluralizing-in-php-actionscript-and-ror/
      */
-    static $plural = array(
+    private static $plural = array(
         '/(quiz)$/i'               => "$1zes",
         '/^(ox)$/i'                => "$1en",
         '/([m|l])ouse$/i'          => "$1ice",
@@ -911,7 +911,7 @@ class TextStatistics
         '/$/'                      => "s"
     );
 
-    static $singular = array(
+    private static $singular = array(
         '/(quiz)zes$/i'             => "$1",
         '/(matr)ices$/i'            => "$1ix",
         '/(vert|ind)ices$/i'        => "$1ex",
@@ -942,7 +942,7 @@ class TextStatistics
         '/s$/i'                     => ""
     );
 
-    static $irregular = array(
+    private static $irregular = array(
         'move'   => 'moves',
         'foot'   => 'feet',
         'goose'  => 'geese',
@@ -953,7 +953,7 @@ class TextStatistics
         'person' => 'people'
     );
 
-    static $uncountable = array(
+    private static $uncountable = array(
         'sheep',
         'fish',
         'deer',
@@ -968,14 +968,15 @@ class TextStatistics
         'equipment'
     );
 
-    public static function pluralise($string) {
+    public static function pluralise($string)
+    {
         // save some time in the case that singular and plural are the same
         if (in_array(strtolower($string), self::$uncountable)) {
             return $string;
         }
 
         // check for irregular singular forms
-        foreach ( self::$irregular as $pattern => $result ) {
+        foreach (self::$irregular as $pattern => $result) {
             $pattern = '/' . $pattern . '$/i';
             if (preg_match($pattern, $string)) {
                 return preg_replace($pattern, $result, $string);
@@ -992,7 +993,8 @@ class TextStatistics
         return $string;
     }
 
-    public static function unpluralise($string) {
+    public static function unpluralise($string)
+    {
         // save some time in the case that singular and plural are the same
         if (in_array(strtolower($string), self::$uncountable)) {
             return $string;
