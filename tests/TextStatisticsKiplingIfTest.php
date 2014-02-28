@@ -392,6 +392,20 @@ class TextStatisticsKiplingIf extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->TextStatistics->syllable_count('son!'), 1);
     }
 
+    /* Test Total Letters
+    -------------------- */
+    public function testLetterCount()
+    {
+        $this->assertEquals(1125, $this->TextStatistics->letter_count($this->strText));
+    }
+
+    /* Test Total Syllables
+    -------------------- */
+    public function testSyllableCount()
+    {
+        $this->assertEquals(338, $this->TextStatistics->total_syllables($this->strText));
+    }
+
     /* Test Words
     -------------------- */
     public function testWordCount()
@@ -403,7 +417,7 @@ class TextStatisticsKiplingIf extends PHPUnit_Framework_TestCase
     -------------------- */
     public function testSentenceCount()
     {
-        $this->assertEquals(1, $this->TextStatistics->sentence_count($this->strText));
+        $this->assertEquals(4, $this->TextStatistics->sentence_count($this->strText));
     }
 
     /* Test Letter Count
@@ -417,21 +431,21 @@ class TextStatisticsKiplingIf extends PHPUnit_Framework_TestCase
     -------------------- */
     public function testFleschKincaidReadingEase()
     {
-        $this->assertEquals(-187.5, $this->TextStatistics->flesch_kincaid_reading_ease($this->strText));
+        $this->assertEquals(34.8, $this->TextStatistics->flesch_kincaid_reading_ease($this->strText));
     }
 
     /* Test Flesch Kincaid Grade Level
     -------------------- */
     public function testFleschKincaidGradeLevel()
     {
-        $this->assertEquals(111.9, $this->TextStatistics->flesch_kincaid_grade_level($this->strText));
+        $this->assertEquals(26.5, $this->TextStatistics->flesch_kincaid_grade_level($this->strText));
     }
 
     /* Test Gunning Fog Score
     -------------------- */
     public function testGunningFogScore()
     {
-        $this->assertEquals(117.5, $this->TextStatistics->gunning_fog_score($this->strText));
+        $this->assertEquals(29.9, $this->TextStatistics->gunning_fog_score($this->strText));
     }
 
     /* Test Coleman Liau Index
@@ -445,13 +459,13 @@ class TextStatisticsKiplingIf extends PHPUnit_Framework_TestCase
     -------------------- */
     public function testSMOGIndex()
     {
-        $this->assertEquals(14.1, $this->TextStatistics->smog_index($this->strText));
+        $this->assertEquals(7.2, $this->TextStatistics->smog_index($this->strText));
     }
 
     /* Test Automated Readability Index
     -------------------- */
     public function testAutomatedReadabilityIndex()
     {
-        $this->assertEquals(142.7, $this->TextStatistics->automated_readability_index($this->strText));
+        $this->assertEquals(33.2, $this->TextStatistics->automated_readability_index($this->strText));
     }
 }
