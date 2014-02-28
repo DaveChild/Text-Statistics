@@ -498,7 +498,7 @@ class TextStatistics
 
         // These syllables would be counted as two but should be one
         $arrSubSyllables = array(
-             'cia(l|$)'
+             'cia(l|$)' // glacial, acacia
             ,'tia'
             ,'cius'
             ,'cious'
