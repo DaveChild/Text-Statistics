@@ -10,6 +10,8 @@ Description
     Coleman Liau Index
     SMOG Index
     Automated Reability Index
+    Dale-Chall Readability Score
+    Spache Readability Score
 
     The code that generates the statistics is in a simple class structure. There are also several unit test classes to ensure that changes made don't break existing functionality. There is also a live version of this tool.
 

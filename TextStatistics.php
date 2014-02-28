@@ -8,13 +8,15 @@
     Released under New BSD license
     http://www.opensource.org/licenses/bsd-license.php
 
-    Calculates following readability scores (formulae can be found in wiki):
+    Calculates following readability scores (formulae can be found in Wikipedia):
       * Flesch Kincaid Reading Ease
       * Flesch Kincaid Grade Level
       * Gunning Fog Score
       * Coleman Liau Index
       * SMOG Index
       * Automated Reability Index
+      * Dale-Chall Readability Score
+      * Spache Readability Score
 
     Will also give:
       * String length
@@ -56,10 +58,20 @@ class TextStatistics
     public $normalize = true;
 
     /**
-     * @var bool $normalize Debug mode shows the steps the syllable counter
+     * @var bool $debug Debug mode shows the steps the syllable counter
      * goes through
      */
     public $debug = false;
+
+    /**
+     * @var array $arrDaleChall Holds the Dale-Chall words list, if set.
+     */
+    public $arrDaleChall = false;
+
+    /**
+     * @var array $arrSpache Holds the Spache words list, if set.
+     */
+    public $arrSpache = false;
 
     /**
      * Constructor.
@@ -160,6 +172,35 @@ class TextStatistics
         $score = self::bc_calc(self::bc_calc(4.71, '*', self::bc_calc($this->letter_count($strText), '/', $this->word_count($strText))), '+', self::bc_calc(self::bc_calc(0.5, '*', self::bc_calc($this->word_count($strText), '/', $this->sentence_count($strText))), '-', 21.43), true, 1);
 
         return $this->normalize_score($score, 0, 12);
+    }
+
+    /**
+     * Gives the Dale-Chall readability score of text entered rounded to one digit
+     * @param   string  $strText         Text to be checked
+     * @return  int|float
+     */
+    public function dale_chall_readability_score($strText)
+    {
+        $strText = $this->clean_text($strText);
+
+        $score = self::bc_calc(self::bc_calc(0.1579, '*', self::bc_calc(100, '*', self::bc_calc($this->dale_chall_difficult_word_count($strText), '/', $this->word_count($strText)))), '+', self::bc_calc(0.0496, '*', self::bc_calc($this->word_count($strText), '/', $this->sentence_count($strText))), true, 1);
+
+        return $this->normalize_score($score, 0, 10);
+    }
+
+
+    /**
+     * Gives the Spache readability score of text entered rounded to one digit
+     * @param   string  $strText         Text to be checked
+     * @return  int|float
+     */
+    public function spache_readability_score($strText)
+    {
+        $strText = $this->clean_text($strText);
+
+        $score = self::bc_calc(self::bc_calc(self::bc_calc(self::bc_calc(0.121, '*', self::bc_calc($this->word_count($strText), '/', $this->sentence_count($strText))), '+', self::bc_calc(0.082, '*', $this->spache_difficult_word_count($strText))), '+', 0.659), true, 1);
+
+        return $this->normalize_score($score, 0, 5); // Not really suitable for measuring readability above grade 4
     }
 
     /**
@@ -470,6 +511,96 @@ class TextStatistics
 
         return ($intLongWordCount);
     }
+
+    /**
+     * Returns the number of words NOT on the Dale-Chall easy word list
+     * @param   string  $strText                  Text to be measured
+     * @return  int
+     */
+    public function dale_chall_difficult_word_count($strText)
+    {
+        $strText = $this->clean_text($strText);
+        $intDifficultWordCount = 0;
+        $arrWords = explode(' ', strtolower(preg_replace('`[^A-za-z\' ]`', '', $strText)));
+        // Fetch Dale-Chall Words
+        $this->fetchDaleChallWordList();
+        for ($i = 0, $intWordCount = count($arrWords); $i < $intWordCount; $i++) {
+            // Single letters are counted as easy
+            if (strlen(trim($arrWords[$i])) < 2) {
+                continue;
+            }
+            if ((!in_array(self::pluralise($arrWords[$i]), $this->arrDaleChall)) && (!in_array(self::unpluralise($arrWords[$i]), $this->arrDaleChall))) {
+                $intDifficultWordCount++;
+            }
+        }
+
+        return ($intDifficultWordCount);
+    }
+
+    /**
+     * Fetch the list of Dale-Chall easy words
+     * @return  int
+     */
+    public function fetchDaleChallWordList()
+    {
+        if ($this->arrDaleChall) {
+            return $this->arrDaleChall;
+        }
+
+        // Fetch Dale-Chall Words
+        include_once('resources/DaleChallWordList.php');
+        $this->arrDaleChall = $arrDaleChallWordList;
+
+        return true;
+    }
+
+    /**
+     * Returns the number of unique words NOT on the Spache easy word list
+     * @param   string  $strText                  Text to be measured
+     * @return  int
+     */
+    public function spache_difficult_word_count($strText)
+    {
+        $strText = $this->clean_text($strText);
+        $intDifficultWordCount = 0;
+        $arrWords = explode(' ', strtolower(preg_replace('`[^A-za-z\' ]`', '', $strText)));
+        // Fetch Spache Words
+        $wordsCounted = array();
+        $this->fetchSpacheWordList();
+        for ($i = 0, $intWordCount = count($arrWords); $i < $intWordCount; $i++) {
+            // Single letters are counted as easy
+            if (strlen(trim($arrWords[$i])) < 2) {
+                continue;
+            }
+            $singularWord = self::unpluralise($arrWords[$i]);
+            if ((!in_array(self::pluralise($arrWords[$i]), $this->arrSpache)) && (!in_array($singularWord, $this->arrSpache))) {
+                if (!in_array($singularWord, $wordsCounted)) {
+                    $intDifficultWordCount++;
+                    $wordsCounted[] = $singularWord;
+                }
+            }
+        }
+
+        return ($intDifficultWordCount);
+    }
+
+    /**
+     * Fetch the list of Spache easy words
+     * @return  int
+     */
+    public function fetchSpacheWordList()
+    {
+        if ($this->arrSpache) {
+            return $this->arrSpache;
+        }
+
+        // Fetch Spache Words
+        include_once('resources/SpachelWordList.php');
+        $this->arrSpache = $arrSpacheWordList;
+
+        return true;
+    }
+
 
     /**
      * Returns the percentage of words with more than three syllables
