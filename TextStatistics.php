@@ -34,15 +34,32 @@
 
 class TextStatistics
 {
-    protected $strEncoding = ''; // Used to hold character encoding to be used by object, if set
+    /**
+     * @var string $strEncoding Used to hold character encoding to be used
+     * by object, if set
+     */
+    protected $strEncoding = '';
 
-    protected $blnMbstring = true; // Efficiency: Is the MB String extension loaded ?
+    /**
+     * @var string $blnMbstring Efficiency: Is the MB String extension loaded?
+     */
+    protected $blnMbstring = true;
 
-    protected static $blnBcmath = true; // Efficiency: Is the BC Math extension loaded ?
+    /**
+     * @var string $blnBcmath Efficiency: Is the BC Math extension loaded?
+     */
+    protected static $blnBcmath = true;
 
-    public $normalize = true; // Whether ot not to limit scores to defined ranges
+    /**
+     * @var bool $normalize Should the result be normalized?
+     */
+    public $normalize = true;
 
-    public $debug = false; // Debug mode shows the steps the syllable counter goes through
+    /**
+     * @var bool $normalize Debug mode shows the steps the syllable counter
+     * goes through
+     */
+    public $debug = false;
 
     /**
      * Constructor.
@@ -172,7 +189,8 @@ class TextStatistics
     }
 
     /**
-     * Gives letter count (ignores all non-letters). Tries mb_strlen and if that fails uses regular strlen.
+     * Gives letter count (ignores all non-letters). Tries mb_strlen and if
+     * that fails uses regular strlen.
      * @param   string  $strText      Text to be measured
      * @return  int
      */
@@ -200,7 +218,8 @@ class TextStatistics
     }
 
     /**
-     * Trims, removes line breaks, multiple spaces and generally cleans text before processing.
+     * Trims, removes line breaks, multiple spaces and generally cleans text
+     * before processing.
      * @param   string  $strText      Text to be transformed
      * @return  string
      */
