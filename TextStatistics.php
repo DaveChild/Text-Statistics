@@ -233,21 +233,42 @@ class TextStatistics
             return $clean[$key];
         }
 
-        // all these tags should be preceeded by a full stop.
-        $fullStopTags = array('li', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dd');
-        foreach ($fullStopTags as $tag) {
-            $strText = str_ireplace('</'.$tag.'>', '.', $strText);
-        }
+        $strText = utf8_decode($strText);
+
+        // Curly quotes etc
+        $strText = str_replace(array("\xe2\x80\x98", "\xe2\x80\x99", "\xe2\x80\x9c", "\xe2\x80\x9d", "\xe2\x80\x93", "\xe2\x80\x94", "\xe2\x80\xa6"), array("'", "'", '"', '"', '-', '--', '...'), $strText);
+        $strText = str_replace(array(chr(145), chr(146), chr(147), chr(148), chr(150), chr(151), chr(133)), array("'", "'", '"', '"', '-', '--', '...'), $strText);
+
+        // Replace periods within numbers
+        $strText = preg_replace('`([^0-9][0-9]+)\.([0-9]+[^0-9])`mis', '${1}0$2', $strText);
+
+        // Handle HTML. Treat block level elements as sentence terminators and
+        // remove all other tags.
+        $strText = preg_replace('`<script(.*?)>(.*?)</script>`is', '', $strText);
+        $strText = preg_replace('`\</?(address|blockquote|center|dir|div|dl|dd|dt|fieldset|form|h1|h2|h3|h4|h5|h6|menu|noscript|ol|p|pre|table|ul|li)[^>]*>`is', '.', $strText);
+        $strText = html_entity_decode($strText);
         $strText = strip_tags($strText);
-        $strText = preg_replace('`[",:;()-]`', ' ', $strText); // Replace commas, hyphens, quotes etc (count them as spaces)
+
+        // Assume blank lines (i.e., paragraph breaks) end sentences (useful
+        // for titles in plain text documents) and replace remaining new
+        // lines with spaces
+        $strText = preg_replace('`(\r\n|\n\r)`is', "\n", $strText);
+        $strText = preg_replace('`(\r|\n){2,}`is', ".\n\n", $strText);
+        $strText = preg_replace('`[ ]*(\n|\r\n|\r)[ ]*`', ' ', $strText);
+
+        // Replace commas, hyphens, quotes etc (count as spaces)
+        $strText = preg_replace('`[",:;()/\`-]`', ' ', $strText);
+
+        // Unify terminators and spaces
+        $strText = trim($strText, '. ') . '.'; // Add final terminator.
         $strText = preg_replace('`[\.!?]`', '.', $strText); // Unify terminators
-        $strText = trim($strText) . '.'; // Add final terminator, just in case it's missing.
-        $strText = preg_replace('`[ ]*(\n|\r\n|\r)[ ]*`', ' ', $strText); // Replace new lines with spaces
+        $strText = preg_replace('`([\.\s]*\.[\.\s]*)`mis', '. ', $strText); // Merge terminators separated by whitespace.
+        $strText = preg_replace('`[ ]+`', ' ', $strText); // Remove multiple spaces
         $strText = preg_replace('`([\.])[\. ]+`', '$1', $strText); // Check for duplicated terminators
         $strText = trim(preg_replace('`[ ]*([\.])`', '$1 ', $strText)); // Pad sentence terminators
-        $strText = preg_replace('` [0-9]+ `', ' ', ' ' . $strText . ' '); // Remove "words" comprised only of numbers
-        $strText = preg_replace('`[ ]+`', ' ', $strText); // Remove multiple spaces
-        $strText = preg_replace_callback('`\. [^ ]+?`', create_function('$matches', 'return strtolower($matches[0]);'), $strText); // Lower case all words following terminators (for gunning fog score)
+
+        // Lower case all words following terminators (for gunning fog score)
+        $strText = preg_replace_callback('`\. [^\. ]`', create_function('$matches', 'return strtolower($matches[0]);'), $strText);
 
         $strText = trim($strText);
 
@@ -418,7 +439,6 @@ class TextStatistics
         for ($i = 0; $i < $intWordCount; $i++) {
             $intSyllableCount += $this->syllable_count($arrWords[$i]);
         }
-
         return (self::bc_calc($intSyllableCount, '/', $intWordCount));
     }
 
