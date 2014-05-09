@@ -477,8 +477,8 @@ class TextStatistics
         $intSyllableCount = 0;
         $intWordCount = $this->word_count($strText);
         $arrWords = explode(' ', $strText);
-        for ($i = 0; $i < $intWordCount; $i++) {
-            $intSyllableCount += $this->syllable_count($arrWords[$i]);
+        foreach ($arrWords as $word) {
+            $intSyllableCount += $this->syllable_count($word);
         }
         return (self::bc_calc($intSyllableCount, '/', $intWordCount));
     }
@@ -595,7 +595,7 @@ class TextStatistics
         }
 
         // Fetch Spache Words
-        include_once('resources/SpachelWordList.php');
+        include_once('resources/SpacheWordList.php');
         $this->arrSpache = $arrSpacheWordList;
 
         return true;
