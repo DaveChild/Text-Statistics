@@ -495,7 +495,7 @@ class TextStatistics
         $intLongWordCount = 0;
         $intWordCount = $this->word_count($strText);
         $arrWords = explode(' ', $strText);
-        for ($arrWords as $word) {
+        foreach ($arrWords as $word) {
             if ($this->syllable_count($word) > 2) {
                 if ($blnCountProperNouns) {
                     $intLongWordCount++;
