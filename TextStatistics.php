@@ -495,12 +495,12 @@ class TextStatistics
         $intLongWordCount = 0;
         $intWordCount = $this->word_count($strText);
         $arrWords = explode(' ', $strText);
-        for ($i = 0; $i < $intWordCount; $i++) {
-            if ($this->syllable_count($arrWords[$i]) > 2) {
+        for ($arrWords as $word) {
+            if ($this->syllable_count($word) > 2) {
                 if ($blnCountProperNouns) {
                     $intLongWordCount++;
                 } else {
-                    $strFirstLetter = $this->substring($arrWords[$i], 0, 1);
+                    $strFirstLetter = $this->substring($word, 0, 1);
                     if ($strFirstLetter !== $this->upper_case($strFirstLetter)) {
                         // First letter is lower case. Count it.
                         $intLongWordCount++;
