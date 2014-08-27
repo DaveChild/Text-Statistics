@@ -595,7 +595,7 @@ class TextStatistics
         }
 
         // Fetch Spache Words
-        include_once('resources/SpachelWordList.php');
+        include_once('resources/SpacheWordList.php');
         $this->arrSpache = $arrSpacheWordList;
 
         return true;
