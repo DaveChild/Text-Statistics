@@ -73,7 +73,7 @@ class Syllables
         ,'sia$'
         ,'eous$'
         ,'[oa]gue$'
-        ,'[^aeiuoycgltdb]{2,}ed$'
+        ,'.[^aeiuoycgltdb]{2,}ed$'
         ,'.ely$'
         //,'[cg]h?ed?$'
         //,'rved?$'
