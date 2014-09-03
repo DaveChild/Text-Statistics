@@ -13,7 +13,7 @@ class Pluralise
         '/(quiz)$/i'               => "$1zes",
         '/^(ox)$/i'                => "$1en",
         '/([m|l])ouse$/i'          => "$1ice",
-        '/(matr|vert|ind)ix|ex$/i' => "$1ices",
+        '/(matrix|vertex|index)$/i'=> "$1ices",
         '/(x|ch|ss|sh)$/i'         => "$1es",
         '/([^aeiouy]|qu)y$/i'      => "$1ies",
         '/(hive)$/i'               => "$1s",
@@ -70,7 +70,8 @@ class Pluralise
         'child'  => 'children',
         'man'    => 'men',
         'tooth'  => 'teeth',
-        'person' => 'people'
+        'person' => 'people',
+        'mouse'  => 'mice'
     );
 
     // Some words are only uncountable sometimes. For example, "blues" can be
@@ -116,6 +117,14 @@ class Pluralise
         // save some time in the case that singular and plural are the same
         if (in_array(strtolower($string), self::$uncountable)) {
             return $string;
+        }
+
+        // check to see if already plural and irregular
+        foreach (self::$irregular as $pattern => $result) {
+            $_pattern = '/' . $result . '$/i';
+            if (preg_match($_pattern, $string)) {
+                return $string;
+            }
         }
 
         // check for irregular singular forms
