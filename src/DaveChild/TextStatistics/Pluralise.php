@@ -73,19 +73,37 @@ class Pluralise
         'person' => 'people'
     );
 
+    // Some words are only uncountable sometimes. For example, "blues" can be
+    // uncountable when referring to music, but countable when referring to
+    // multiple colours.
     private static $uncountable = array(
-        'sheep',
-        'fish',
-        'deer',
         'beef',
-        'css',
+        'bison',
+        'buffalo',
+        'carbon',
+        'chemistry',
+        'copper',
+        'geometry',
+        'gold',
         'cs',
-        'series',
-        'species',
-        'money',
-        'rice',
+        'css',
+        'deer',
+        'equipment',
+        'fish',
+        'furniture',
         'information',
-        'equipment'
+        'mathematics',
+        'money',
+        'moose',
+        'nitrogen',
+        'oxygen',
+        'rice',
+        'series',
+        'sheep',
+        'species',
+        'surgery',
+        'traffic',
+        'water'
     );
 
     /**
