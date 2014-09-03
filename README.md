@@ -1,6 +1,6 @@
 #PHP Text Statistics
 
-[![Build Status](https://travis-ci.org/DaveChild/TSComposer.svg?branch=master)](https://travis-ci.org/DaveChild/TSComposer) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveChild/TSComposer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveChild/TSComposer/?branch=master)
+[![Build Status](https://travis-ci.org/DaveChild/Text-Statistics.svg?branch=master)](https://travis-ci.org/DaveChild/Text-Statistics) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveChild/Text-Statistics/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveChild/Text-Statistics/?branch=master)
 
 The PHP Text Statistics class will help you to indentify issues with your website content, especially with readability.
 
