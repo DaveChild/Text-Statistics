@@ -26,7 +26,7 @@ Homographs are going to be impossible to calculate as they depend on context (i.
 
     {
         "require": {
-            "DaveChild/TextStatistics": "dev-master"
+            "davechild/textstatistics": "dev-master"
         }
     }
 

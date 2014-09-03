@@ -1,5 +1,5 @@
 {
-    "name": "DaveChild/TSComposer",
+    "name": "davechild/textstatistics",
     "description": "PHP package to measure the readability of text according to various algorithms.",
     "homepage": "https://github.com/DaveChild/Text-Statistics",
     "authors": [
