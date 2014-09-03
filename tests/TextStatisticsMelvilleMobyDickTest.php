@@ -1,8 +1,5 @@
 <?php
 
-// Include the text statistics class
-require_once dirname( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'TextStatistics.php';
-
 class TextStatisticsMelvilleMobyDick extends PHPUnit_Framework_TestCase
 {
 
@@ -27,10 +24,10 @@ class TextStatisticsMelvilleMobyDick extends PHPUnit_Framework_TestCase
         Manually Calculated Scores
         --------------------------------------------------------
         Flesch-Kincaid Reading Ease
-        (206.835 - (1.015 * (word_count / sentence_count)) - (84.6 * (syllable_count / word_count))) = 53.380886194029850746268656716418
+        (206.835 - (1.015 * (word_count / sentence_count)) - (84.6 * (syllableCount / word_count))) = 53.380886194029850746268656716418
 
         Flesch-Kincaid Grade Level
-        ((0.39 * (word_count / sentence_count)) + (11.8 * (syllable_count / word_count)) - 15.59) = 12.055516169154228855721393034826
+        ((0.39 * (word_count / sentence_count)) + (11.8 * (syllableCount / word_count)) - 15.59) = 12.055516169154228855721393034826
 
         Gunning-Fog Score
         (((word_count / sentence_count) + (100 * (long_word_count / word_count ))) * 0.4) = 14.428109452736318407960199004975
@@ -51,8 +48,8 @@ class TextStatisticsMelvilleMobyDick extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->TextStatistics = new TextStatistics();
-        $this->TextStatistics->normalize = false;
+        $this->TextStatistics = new DaveChild\TextStatistics\TextStatistics();
+        $this->TextStatistics->normalise = false;
     }
 
     public function tearDown()
@@ -64,236 +61,236 @@ class TextStatisticsMelvilleMobyDick extends PHPUnit_Framework_TestCase
     -------------------- */
     public function testMobyDickSyllables()
     { // The Words from Moby Dick, in order
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('Call'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('me'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('Ishmael'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('Some'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('years'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('ago'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('never'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('mind'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('how'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('long'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('precisely'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('having'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('little'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('or'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('no'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('money'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('in'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('my'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('purse'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('and'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('nothing'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('particular'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('to'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('interest'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('me'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('on'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('shore'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('thought'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('would'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('sail'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('about'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('a'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('little'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('and'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('see'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('watery'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('part'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('of'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('world'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('It'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('is'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('a'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('way'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('have'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('of'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('driving'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('off'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('spleen'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('and'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('regulating'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('circulation'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('Whenever'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('find'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('myself'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('growing'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('grim'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('about'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('mouth'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('whenever'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('it'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('is'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('a'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('damp'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('drizzly'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('November'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('in'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('my'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('soul'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('whenever'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('find'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('myself'));
-        $this->assertEquals(6, $this->TextStatistics->syllable_count('involuntarily'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('pausing'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('before'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('coffin'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('warehouses'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('and'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('bringing'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('up'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('rear'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('of'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('every'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('funeral'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('meet'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('and'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('especially'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('whenever'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('my'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('hypos'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('get'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('such'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('an'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('upper'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('hand'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('of'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('me'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('that'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('it'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('requires'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('a'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('strong'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('moral'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('principle'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('to'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('prevent'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('me'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('from'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('deliberately'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('stepping'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('into'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('street'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('and'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('methodically'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('knocking'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('people\'s'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('hats'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('off'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('then'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('account'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('it'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('high'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('time'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('to'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('get'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('to'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('sea'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('as'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('soon'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('as'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('can'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('This'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('is'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('my'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('substitute'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('for'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('pistol'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('and'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('ball'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('With'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('a'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('philosophical'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('flourish'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('Cato'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('throws'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('himself'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('upon'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('his'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('sword'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('I'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('quietly'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('take'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('to'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('ship'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('There'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('is'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('nothing'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('surprising'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('in'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('this'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('If'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('they'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('but'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('knew'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('it'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('almost'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('all'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('men'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('in'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('their'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('degree'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('some'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('time'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('or'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('other'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('cherish'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('very'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('nearly'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('same'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('feelings'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('towards'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('ocean'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('with'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('me'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('Call'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('me'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('Ishmael'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('Some'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('years'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('ago'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('never'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('mind'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('how'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('long'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('precisely'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('having'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('little'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('or'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('no'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('money'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('in'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('my'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('purse'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('and'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('nothing'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('particular'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('to'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('interest'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('me'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('on'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('shore'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('thought'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('would'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('sail'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('about'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('a'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('little'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('and'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('see'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('watery'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('part'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('of'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('world'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('It'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('is'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('a'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('way'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('have'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('of'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('driving'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('off'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('spleen'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('and'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('regulating'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('circulation'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('Whenever'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('find'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('myself'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('growing'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('grim'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('about'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('mouth'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('whenever'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('it'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('is'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('a'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('damp'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('drizzly'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('November'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('in'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('my'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('soul'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('whenever'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('find'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('myself'));
+        $this->assertEquals(6, $this->TextStatistics->syllableCount('involuntarily'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('pausing'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('before'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('coffin'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('warehouses'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('and'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('bringing'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('up'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('rear'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('of'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('every'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('funeral'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('meet'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('and'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('especially'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('whenever'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('my'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('hypos'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('get'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('such'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('an'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('upper'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('hand'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('of'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('me'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('that'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('it'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('requires'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('a'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('strong'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('moral'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('principle'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('to'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('prevent'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('me'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('from'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('deliberately'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('stepping'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('into'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('street'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('and'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('methodically'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('knocking'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('people\'s'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('hats'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('off'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('then'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('account'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('it'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('high'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('time'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('to'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('get'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('to'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('sea'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('as'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('soon'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('as'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('can'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('This'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('is'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('my'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('substitute'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('for'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('pistol'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('and'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('ball'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('With'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('a'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('philosophical'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('flourish'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('Cato'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('throws'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('himself'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('upon'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('his'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('sword'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('I'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('quietly'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('take'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('to'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('ship'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('There'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('is'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('nothing'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('surprising'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('in'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('this'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('If'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('they'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('but'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('knew'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('it'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('almost'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('all'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('men'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('in'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('their'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('degree'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('some'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('time'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('or'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('other'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('cherish'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('very'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('nearly'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('same'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('feelings'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('towards'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('ocean'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('with'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('me'));
     }
 
     /* Test Word Count
     -------------------- */
     public function testWordCount()
     {
-        $this->assertEquals(201, $this->TextStatistics->word_count($this->strText));
+        $this->assertEquals(201, $this->TextStatistics->wordCount($this->strText));
     }
 
     /* Test Long Word Count
     -------------------- */
     public function testLongWordCount()
     {
-        $this->assertEquals(23, $this->TextStatistics->words_with_three_syllables($this->strText, true)); // Include proper nouns
-        $this->assertEquals(22, $this->TextStatistics->words_with_three_syllables($this->strText, false)); // Don't include proper nouns
+        $this->assertEquals(23, $this->TextStatistics->wordsWithThreeSyllables($this->strText, true)); // Include proper nouns
+        $this->assertEquals(22, $this->TextStatistics->wordsWithThreeSyllables($this->strText, false)); // Don't include proper nouns
     }
 
     /* Test Sentences
     -------------------- */
     public function testSentenceCount()
     {
-        $this->assertEquals(8, $this->TextStatistics->sentence_count($this->strText));
+        $this->assertEquals(8, $this->TextStatistics->sentenceCount($this->strText));
     }
 
     /* Test Letter Count
     -------------------- */
     public function testTextLengthCheck()
     {
-        $this->assertEquals(884, $this->TextStatistics->letter_count($this->strText));
+        $this->assertEquals(884, $this->TextStatistics->letterCount($this->strText));
     }
 
     /* Test Flesch Kincaid Reading Ease

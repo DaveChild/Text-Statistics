@@ -1,8 +1,5 @@
 <?php
 
-// Include the text statistics class
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TextStatistics.php';
-
 class TextStatisticsTest extends PHPUnit_Framework_TestCase
 {
 
@@ -18,8 +15,8 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->TextStatistics = new TextStatistics();
-        $this->TextStatistics->normalize = false;
+        $this->TextStatistics = new DaveChild\TextStatistics\TextStatistics();
+        $this->TextStatistics->normalise = false;
     }
 
     public function tearDown()
@@ -31,107 +28,107 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
     -------------------- */
     public function testSyllableCountBasicWords()
     { // "Normal" words
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('a'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('was'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('the'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('and'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('foobar'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('hello'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('world'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('wonderful'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('simple'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('easy'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('hard'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('quick'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('brown'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('fox'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('jumped'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('over'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('lazy'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('dog'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('camera'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('a'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('was'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('and'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('foobar'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('hello'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('world'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('wonderful'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('simple'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('easy'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('hard'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('quick'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('brown'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('fox'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('jumped'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('over'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('lazy'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('dog'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('camera'));
     }
 
     public function testSyllableCountComplexWords()
     { // Odd syllables, long words, difficult sounds
-        $this->assertEquals(12, $this->TextStatistics->syllable_count('antidisestablishmentarianism'));
-        $this->assertEquals(14, $this->TextStatistics->syllable_count('supercalifragilisticexpialidocious'));
-        $this->assertEquals(8, $this->TextStatistics->syllable_count('chlorofluorocarbonation'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('forethoughtfulness'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('phosphorescent'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('theoretician'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('promiscuity'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('unbutlering'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('continuity'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('craunched'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('squelched'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('scrounge'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('coughed'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('smile'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('monopoly'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('doughey'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('doughier'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('leguminous'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('thoroughbreds'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('special'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('delicious'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('spatial'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('pacifism'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('coagulant'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('shouldn\'t'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('mcdonald'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('audience'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('finance'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('prevalence'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('impropriety'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('alien'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('dreadnought'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('verandah'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('similar'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('similarly'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('central'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('cyst'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('term'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('order'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('fur'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('sugar'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('paper'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('make'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('gem'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('program'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('hopeless'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('hopelessly'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('careful'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('carefully'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('stuffy'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('thistle'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('teacher'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('unhappy'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('ambiguity'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('validity'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('ambiguous'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('deserve'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('blooper'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('scooped'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('deserve'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('deal'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('death'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('dearth'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('deign'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('reign'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('bedsore'));
-        $this->assertEquals(5, $this->TextStatistics->syllable_count('anorexia'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('anymore'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('cored'));
-        $this->assertEquals(1, $this->TextStatistics->syllable_count('sore'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('foremost'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('restore'));
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('minute'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('manticores'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('asparagus'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('unexplored'));
-        $this->assertEquals(4, $this->TextStatistics->syllable_count('unexploded'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('CAPITALS'));
+        $this->assertEquals(12, $this->TextStatistics->syllableCount('antidisestablishmentarianism'));
+        $this->assertEquals(14, $this->TextStatistics->syllableCount('supercalifragilisticexpialidocious'));
+        $this->assertEquals(8, $this->TextStatistics->syllableCount('chlorofluorocarbonation'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('forethoughtfulness'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('phosphorescent'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('theoretician'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('promiscuity'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('unbutlering'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('continuity'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('craunched'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('squelched'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('scrounge'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('coughed'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('smile'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('monopoly'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('doughey'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('doughier'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('leguminous'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('thoroughbreds'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('special'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('delicious'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('spatial'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('pacifism'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('coagulant'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('shouldn\'t'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('mcdonald'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('audience'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('finance'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('prevalence'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('impropriety'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('alien'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('dreadnought'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('verandah'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('similar'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('similarly'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('central'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('cyst'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('term'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('order'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('fur'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('sugar'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('paper'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('make'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('gem'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('program'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('hopeless'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('hopelessly'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('careful'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('carefully'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('stuffy'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('thistle'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('teacher'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('unhappy'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('ambiguity'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('validity'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('ambiguous'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('deserve'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('blooper'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('scooped'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('deserve'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('deal'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('death'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('dearth'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('deign'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('reign'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('bedsore'));
+        $this->assertEquals(5, $this->TextStatistics->syllableCount('anorexia'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('anymore'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('cored'));
+        $this->assertEquals(1, $this->TextStatistics->syllableCount('sore'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('foremost'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('restore'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('minute'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('manticores'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('asparagus'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('unexplored'));
+        $this->assertEquals(4, $this->TextStatistics->syllableCount('unexploded'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('CAPITALS'));
     }
 
     // These are fairly common words that are exceptions to given rules and that can not
@@ -140,84 +137,86 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
     // into the section above. Many compound words will end up here.
     public function testSyllableCountProgrammedExceptions()
     {
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('simile'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('simile'));
         // Compounds that have caused problems so far
         // Problem: far too many compound words to list exhaustively.
-        $this->assertEquals(2, $this->TextStatistics->syllable_count('shoreline'));
-        $this->assertEquals(3, $this->TextStatistics->syllable_count('forever'));
+        $this->assertEquals(2, $this->TextStatistics->syllableCount('shoreline'));
+        $this->assertEquals(3, $this->TextStatistics->syllableCount('forever'));
     }
 
     public function testAverageSyllablesPerWord()
     {
-        $this->assertEquals(1, $this->TextStatistics->average_syllables_per_word('and then there was one'));
-        $this->assertEquals(2, $this->TextStatistics->average_syllables_per_word('because special ducklings deserve rainbows'));
-        $this->assertEquals(1.5, $this->TextStatistics->average_syllables_per_word('and then there was one because special ducklings deserve rainbows'));
+        $this->assertEquals(1, $this->TextStatistics->averageSyllablesPerWord('and then there was one'));
+        $this->assertEquals(2, $this->TextStatistics->averageSyllablesPerWord('because special ducklings deserve rainbows'));
+        $this->assertEquals(1.5, $this->TextStatistics->averageSyllablesPerWord('and then there was one because special ducklings deserve rainbows'));
     }
 
     /* Test Words
     -------------------- */
     public function testWordCount()
     {
-        $this->assertEquals(9, $this->TextStatistics->word_count('The quick brown fox jumps over the lazy dog'));
-        $this->assertEquals(9, $this->TextStatistics->word_count('The quick brown fox jumps over the lazy dog.'));
-        $this->assertEquals(9, $this->TextStatistics->word_count('The quick brown fox jumps over the lazy dog. '));
-        $this->assertEquals(9, $this->TextStatistics->word_count(' The quick brown fox jumps over the lazy dog. '));
-        $this->assertEquals(9, $this->TextStatistics->word_count(' The  quick brown fox jumps over the lazy dog. '));
-        $this->assertEquals(2, $this->TextStatistics->word_count('Yes. No.'));
-        $this->assertEquals(2, $this->TextStatistics->word_count('Yes.No.'));
-        $this->assertEquals(2, $this->TextStatistics->word_count('Yes.No.'));
-        $this->assertEquals(2, $this->TextStatistics->word_count('Yes . No.'));
-        $this->assertEquals(2, $this->TextStatistics->word_count('Yes .No.'));
-        $this->assertEquals(2, $this->TextStatistics->word_count('Yes - No. '));
+        $this->assertEquals(9, $this->TextStatistics->wordCount('The quick brown fox jumps over the lazy dog'));
+        $this->assertEquals(9, $this->TextStatistics->wordCount('The quick brown fox jumps over the lazy dog.'));
+        $this->assertEquals(9, $this->TextStatistics->wordCount('The quick brown fox jumps over the lazy dog. '));
+        $this->assertEquals(9, $this->TextStatistics->wordCount(' The quick brown fox jumps over the lazy dog. '));
+        $this->assertEquals(9, $this->TextStatistics->wordCount(' The  quick brown fox jumps over the lazy dog. '));
+        $this->assertEquals(2, $this->TextStatistics->wordCount('Yes. No.'));
+        $this->assertEquals(2, $this->TextStatistics->wordCount('Yes.No.'));
+        $this->assertEquals(2, $this->TextStatistics->wordCount('Yes.No.'));
+        $this->assertEquals(2, $this->TextStatistics->wordCount('Yes . No.'));
+        $this->assertEquals(2, $this->TextStatistics->wordCount('Yes .No.'));
+        $this->assertEquals(2, $this->TextStatistics->wordCount('Yes - No. '));
     }
 
     public function testCheckPercentageWordsWithThreeSyllables()
     {
-        $this->assertEquals(9, number_format($this->TextStatistics->percentage_words_with_three_syllables('there is just one word with three syllables in this sentence')));
-        $this->assertEquals(9, number_format($this->TextStatistics->percentage_words_with_three_syllables('there is just one word with three syllables in this sentence', true)));
-        $this->assertEquals(0, number_format($this->TextStatistics->percentage_words_with_three_syllables('there are no valid words with three Syllables in this sentence', false)));
-        $this->assertEquals(5, number_format($this->TextStatistics->percentage_words_with_three_syllables('there is one and only one word with three or more syllables in this long boring sentence of twenty words')));
-        $this->assertEquals(10, number_format($this->TextStatistics->percentage_words_with_three_syllables('there are two and only two words with three or more syllables in this long sentence of exactly twenty words')));
-        $this->assertEquals(5, number_format($this->TextStatistics->percentage_words_with_three_syllables('there is Actually only one valid word with three or more syllables in this long sentence of Exactly twenty words', false)));
-        $this->assertEquals(0, number_format($this->TextStatistics->percentage_words_with_three_syllables('no long words in this sentence')));
-        $this->assertEquals(0, number_format($this->TextStatistics->percentage_words_with_three_syllables('no long valid words in this sentence because the test ignores proper case words like this Behemoth', false)));
+        $this->assertEquals(9, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('there is just one word with three syllables in this sentence')));
+        $this->assertEquals(9, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('there is just one word with three syllables in this sentence', true)));
+        $this->assertEquals(0, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('there are no valid words with three Syllables in this sentence', false)));
+        $this->assertEquals(5, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('there is one and only one word with three or more syllables in this long boring sentence of twenty words')));
+        $this->assertEquals(10, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('there are two and only two words with three or more syllables in this long sentence of exactly twenty words')));
+        $this->assertEquals(5, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('there is Actually only one valid word with three or more syllables in this long sentence of Exactly twenty words', false)));
+        $this->assertEquals(0, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('no long words in this sentence')));
+        $this->assertEquals(0, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('no long valid words in this sentence because the test ignores proper case words like this Behemoth', false)));
     }
 
     public function testTextLengthCheck()
     {
-        $this->assertEquals(1, $this->TextStatistics->letter_count('a'));
-        $this->assertEquals(0, $this->TextStatistics->letter_count(''));
-        $this->assertEquals(46, $this->TextStatistics->letter_count('this sentence has 30 characters, not including the digits'));
+        $this->assertEquals(1, $this->TextStatistics->letterCount('a'));
+        // Reset text before running second letter count check or it will use preset text of "a"
+        $this->TextStatistics->setText('');
+        $this->assertEquals(0, $this->TextStatistics->letterCount(''));
+        $this->assertEquals(46, $this->TextStatistics->letterCount('this sentence has 30 characters, not including the digits'));
     }
 
     /* Test Sentences
     -------------------- */
     public function testSentenceCount()
     {
-        $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence'));
-        $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence.'));
-        $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence!'));
-        $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence?'));
-        $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence..'));
-        $this->assertEquals(2, $this->TextStatistics->sentence_count('This is a sentence. So is this.'));
-        $this->assertEquals(2, $this->TextStatistics->sentence_count("This is a sentence. \n\n So is this, but this is multi-line!"));
-        $this->assertEquals(2, $this->TextStatistics->sentence_count('This is a sentence,. So is this.'));
-        $this->assertEquals(2, $this->TextStatistics->sentence_count('This is a sentence!? So is this.'));
-        $this->assertEquals(3, $this->TextStatistics->sentence_count('This is a sentence. So is this. And this one as well.'));
-        $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence - but just one.'));
-        $this->assertEquals(1, $this->TextStatistics->sentence_count('This is a sentence (but just one).'));
+        $this->assertEquals(1, $this->TextStatistics->sentenceCount('This is a sentence'));
+        $this->assertEquals(1, $this->TextStatistics->sentenceCount('This is a sentence.'));
+        $this->assertEquals(1, $this->TextStatistics->sentenceCount('This is a sentence!'));
+        $this->assertEquals(1, $this->TextStatistics->sentenceCount('This is a sentence?'));
+        $this->assertEquals(1, $this->TextStatistics->sentenceCount('This is a sentence..'));
+        $this->assertEquals(2, $this->TextStatistics->sentenceCount('This is a sentence. So is this.'));
+        $this->assertEquals(2, $this->TextStatistics->sentenceCount("This is a sentence. \n\n So is this, but this is multi-line!"));
+        $this->assertEquals(2, $this->TextStatistics->sentenceCount('This is a sentence,. So is this.'));
+        $this->assertEquals(2, $this->TextStatistics->sentenceCount('This is a sentence!? So is this.'));
+        $this->assertEquals(3, $this->TextStatistics->sentenceCount('This is a sentence. So is this. And this one as well.'));
+        $this->assertEquals(1, $this->TextStatistics->sentenceCount('This is a sentence - but just one.'));
+        $this->assertEquals(1, $this->TextStatistics->sentenceCount('This is a sentence (but just one).'));
     }
 
     public function testAverageWordsPerSentence()
     {
-        $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This is a sentence'));
-        $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This is a sentence.'));
-        $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This is a sentence. '));
-        $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This is a sentence. This is a sentence'));
-        $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This is a sentence. This is a sentence.'));
-        $this->assertEquals(4, $this->TextStatistics->average_words_per_sentence('This, is - a sentence . This is a sentence. '));
-        $this->assertEquals(5.5, $this->TextStatistics->average_words_per_sentence('This is a sentence with extra text. This is a sentence. '));
-        $this->assertEquals(6, $this->TextStatistics->average_words_per_sentence('This is a sentence with some extra text. This is a sentence. '));
+        $this->assertEquals(4, $this->TextStatistics->averageWordsPerSentence('This is a sentence'));
+        $this->assertEquals(4, $this->TextStatistics->averageWordsPerSentence('This is a sentence.'));
+        $this->assertEquals(4, $this->TextStatistics->averageWordsPerSentence('This is a sentence. '));
+        $this->assertEquals(4, $this->TextStatistics->averageWordsPerSentence('This is a sentence. This is a sentence'));
+        $this->assertEquals(4, $this->TextStatistics->averageWordsPerSentence('This is a sentence. This is a sentence.'));
+        $this->assertEquals(4, $this->TextStatistics->averageWordsPerSentence('This, is - a sentence . This is a sentence. '));
+        $this->assertEquals(5.5, $this->TextStatistics->averageWordsPerSentence('This is a sentence with extra text. This is a sentence. '));
+        $this->assertEquals(6, $this->TextStatistics->averageWordsPerSentence('This is a sentence with some extra text. This is a sentence. '));
     }
 
     /* Test Scores

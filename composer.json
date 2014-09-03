@@ -1,0 +1,31 @@
+{
+    "name": "DaveChild/TSComposer",
+    "description": "PHP package to measure the readability of text according to various algorithms.",
+    "homepage": "https://github.com/DaveChild/Text-Statistics",
+    "authors": [
+        {
+            "name": "Dave Child",
+            "email": "dave@addedbytes.com",
+            "homepage": "https://www.addedbytes.com/",
+            "role": "Developer"
+        }
+    ],
+    "license": "BSD-2-Clause",
+    "require-dev": {
+        "phpunit/phpunit": "4.2.*"
+    },
+    "autoload": {
+        "psr-0" : {
+            "DaveChild\\TextStatistics" : "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "suggest": {
+        "ext-bcmath": "More accurate floating point calculations.",
+        "ext-mbstring": "Handle multi-byte text properly."
+    }
+}
