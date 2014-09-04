@@ -24,6 +24,48 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
         unset($this->objTextStatistics);
     }
 
+    /* Test Cleaning of text
+    -------------------- */
+    public function testCleaning()
+    {
+        $this->assertSame('', DaveChild\TextStatistics\Text::cleanText(false));
+        $this->assertSame('There once was a little sausage named Baldrick. and he lived happily ever after.', DaveChild\TextStatistics\Text::cleanText('There once was a little sausage named Baldrick. . . .  And he lived happily ever after.!! !??'));
+    }
+
+    /* Test Case changes
+    -------------------- */
+    public function testCases()
+    {
+        $this->assertSame('banana', DaveChild\TextStatistics\Text::lowerCase('banana'));
+        $this->assertSame('banana', DaveChild\TextStatistics\Text::lowerCase('Banana'));
+        $this->assertSame('banana', DaveChild\TextStatistics\Text::lowerCase('BanAna'));
+        $this->assertSame('banana', DaveChild\TextStatistics\Text::lowerCase('BANANA'));
+        $this->assertSame('BANANA', DaveChild\TextStatistics\Text::upperCase('banana'));
+        $this->assertSame('BANANA', DaveChild\TextStatistics\Text::upperCase('Banana'));
+        $this->assertSame('BANANA', DaveChild\TextStatistics\Text::upperCase('BanAna'));
+        $this->assertSame('BANANA', DaveChild\TextStatistics\Text::upperCase('BANANA'));
+    }
+
+    /* Test Counts
+    -------------------- */
+    public function testCounts()
+    {
+        $this->assertSame(47, DaveChild\TextStatistics\Text::characterCount('There once was a little sausage named Baldrick.'));
+        $this->assertSame(47, DaveChild\TextStatistics\Text::textLength('There once was a little sausage named Baldrick.'));
+        $this->assertSame(39, DaveChild\TextStatistics\Text::letterCount('There once was a little sausage named Baldrick.'));
+        $this->assertSame(0, DaveChild\TextStatistics\Text::letterCount(''));
+        $this->assertSame(0, DaveChild\TextStatistics\Text::letterCount(' '));
+        $this->assertSame(0, DaveChild\TextStatistics\Text::wordCount(''));
+        $this->assertSame(0, DaveChild\TextStatistics\Text::wordCount(' '));
+        $this->assertSame(0, DaveChild\TextStatistics\Text::sentenceCount(''));
+        $this->assertSame(0, DaveChild\TextStatistics\Text::sentenceCount(' '));
+        $this->assertSame(1, $this->TextStatistics->letterCount('a'));
+        // Reset text before running second letter count check or it will use preset text of "a"
+        $this->TextStatistics->setText('');
+        $this->assertSame(0, $this->TextStatistics->letterCount(''));
+        $this->assertSame(46, $this->TextStatistics->letterCount('this sentence has 30 characters, not including the digits'));
+    }
+
     /* Test Syllables
     -------------------- */
     public function testSyllableCountBasicWords()
@@ -179,15 +221,6 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(5, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('there is Actually only one valid word with three or more syllables in this long sentence of Exactly twenty words', false)));
         $this->assertEquals(0, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('no long words in this sentence')));
         $this->assertEquals(0, number_format($this->TextStatistics->percentageWordsWithThreeSyllables('no long valid words in this sentence because the test ignores proper case words like this Behemoth', false)));
-    }
-
-    public function testTextLengthCheck()
-    {
-        $this->assertEquals(1, $this->TextStatistics->letterCount('a'));
-        // Reset text before running second letter count check or it will use preset text of "a"
-        $this->TextStatistics->setText('');
-        $this->assertEquals(0, $this->TextStatistics->letterCount(''));
-        $this->assertEquals(46, $this->TextStatistics->letterCount('this sentence has 30 characters, not including the digits'));
     }
 
     /* Test Sentences

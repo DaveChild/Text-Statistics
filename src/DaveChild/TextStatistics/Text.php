@@ -134,19 +134,14 @@ class Text
         }
 
         $strLowerCaseText = '';
-        try {
-
-            if (!self::$blnMbstring) {
-                throw new Exception('The extension mbstring is not loaded.');
-            }
-
+        if (!self::$blnMbstring) {
+            $strLowerCaseText = strtolower($strText);
+        } else {
             if ($strEncoding == '') {
                 $strLowerCaseText = mb_strtolower($strText);
             } else {
                 $strLowerCaseText = mb_strtolower($strText, $strEncoding);
             }
-        } catch (\Exception $e) {
-            $strLowerCaseText = strtolower($strText);
         }
 
         return $strLowerCaseText;
@@ -166,19 +161,14 @@ class Text
         }
 
         $strUpperCaseText = '';
-        try {
-
-            if (!self::$blnMbstring) {
-                throw new Exception('The extension mbstring is not loaded.');
-            }
-
-            if (is_null($strEncoding)) {
+        if (!self::$blnMbstring) {
+            $strUpperCaseText = strtoupper($strText);
+        } else {
+            if ($strEncoding == '') {
                 $strUpperCaseText = mb_strtoupper($strText);
             } else {
                 $strUpperCaseText = mb_strtoupper($strText, $strEncoding);
             }
-        } catch (\Exception $e) {
-            $strUpperCaseText = strtoupper($strText);
         }
 
         return $strUpperCaseText;
@@ -200,19 +190,15 @@ class Text
         }
 
         $strSubstring = '';
-        try {
 
-            if (!self::$blnMbstring) {
-                throw new Exception('The extension mbstring is not loaded.');
-            }
-
+        if (!self::$blnMbstring) {
+            $strSubstring = substr($strText, $intStart, $intLength);
+        } else {
             if ($strEncoding == '') {
                 $strSubstring = mb_substr($strText, $intStart, $intLength);
             } else {
                 $strSubstring = mb_substr($strText, $intStart, $intLength, $strEncoding);
             }
-        } catch (\Exception $e) {
-            $strSubstring = substr($strText, $intStart, $intLength);
         }
 
         return $strSubstring;
@@ -232,19 +218,15 @@ class Text
         }
 
         $intTextLength = 0;
-        try {
 
-            if (!self::$blnMbstring) {
-                throw new Exception('The extension mbstring is not loaded.');
-            }
-
+        if (!self::$blnMbstring) {
+            $intTextLength = strlen($strText);
+        } else {
             if ($strEncoding == '') {
                 $intTextLength = mb_strlen($strText);
             } else {
                 $intTextLength = mb_strlen($strText, $strEncoding);
             }
-        } catch (\Exception $e) {
-            $intTextLength = strlen($strText);
         }
 
         return $intTextLength;
