@@ -114,7 +114,7 @@ class Maths
             case 'mod':
             case 'modulus':
                 if (self::$blnBcmath) {
-                    $result = bcmod(bcdiv($number1, $number2, $precision), $precision); // string, or NULL if modulus is 0.
+                    $result = bcmod($number1, $number2); // string, or NULL if modulus is 0.
                 } else if ($number2 != 0) {
                     $result = $number1 % $number2;
                 }
