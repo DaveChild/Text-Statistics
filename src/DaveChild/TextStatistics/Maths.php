@@ -78,28 +78,22 @@ class Maths
         $result  = null;
         $compare = false;
 
+        $action = self::normaliseOperator($action);
+
         switch ($action) {
             case '+':
-            case 'add':
-            case 'addition':
                 $result = (self::$blnBcmath) ? bcadd($number1, $number2, $precision) /* string */ : ($number1 + $number2);
                 break;
             case '-':
-            case 'sub':
-            case 'subtract':
                 $result = (self::$blnBcmath) ? bcsub($number1, $number2, $precision) /* string */ : ($number1 - $number2);
                 break;
             case '*':
-            case 'mul':
-            case 'multiply':
                 $result = (self::$blnBcmath) ? bcmul($number1, $number2, $precision) /* string */ : ($number1 * $number2);
                 break;
             case 'sqrt':
                 $result = (self::$blnBcmath) ? bcsqrt($number1, $precision) /* string */ : sqrt($number1);
                 break;
             case '/':
-            case 'div':
-            case 'divide':
                 if ($number2 > 0) {
                     if (self::$blnBcmath) {
                         $result = bcdiv($number1, $number2, $precision); // string, or NULL if right_operand is 0
@@ -113,8 +107,6 @@ class Maths
                 }
                 break;
             case '%':
-            case 'mod':
-            case 'modulus':
                 if (self::$blnBcmath) {
                     $result = bcmod($number1, $number2); // string, or NULL if modulus is 0.
                 } else if ($number2 != 0) {
@@ -126,8 +118,6 @@ class Maths
                 }
                 break;
             case '=':
-            case 'comp':
-            case 'compare':
                 $compare = true;
                 if (self::$blnBcmath) {
                     $result = bccomp($number1, $number2, $precision); // returns int 0, 1 or -1
@@ -152,5 +142,42 @@ class Maths
         }
 
         return false;
+    }
+
+    public static function normaliseOperator($operator)
+    {
+        switch ($operator) {
+            case '+':
+            case 'add':
+            case 'addition':
+                return '+';
+                break;
+            case '-':
+            case 'sub':
+            case 'subtract':
+                return '-';
+                break;
+            case '*':
+            case 'mul':
+            case 'multiply':
+                return '*';
+                break;
+            case '/':
+            case 'div':
+            case 'divide':
+                return '/';
+                break;
+            case '%':
+            case 'mod':
+            case 'modulus':
+                return '%';
+                break;
+            case '=':
+            case 'comp':
+            case 'compare':
+                return '=';
+                break;
+        }
+        return $operator;
     }
 }
