@@ -122,13 +122,13 @@ class Maths
 
     /**
      * Function which performs calculation.
-     * @param  [type] $number1   [description]
-     * @param  [type] $action    [description]
-     * @param  [type] $number2   [description]
-     * @param  [type] $round     [description]
-     * @param  [type] $decimals  [description]
-     * @param  [type] $precision [description]
-     * @return [type]            [description]
+     * @param  string|integer|float|boolean $number1 See bcCalc description
+     * @param  string $action See bcCalc description
+     * @param  string|integer|float|boolean $number2 See bcCalc description
+     * @param  boolean $round See bcCalc description
+     * @param  integer $decimals See bcCalc description
+     * @param  integer $precision See bcCalc description
+     * @return integer|float|boolean
      */
     private static function performCalc($number1, $action, $number2, $round, $decimals, $precision)
     {
