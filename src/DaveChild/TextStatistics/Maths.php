@@ -66,20 +66,74 @@ class Maths
             return false;
         }
 
+        // Check whether bcmath extension is available
         if (is_null(self::$blnBcmath)) {
             self::$blnBcmath = extension_loaded('bcmath');
         }
 
+        // Check values of input variables
         if (self::$blnBcmath) {
             $number1 = strval($number1);
             $number2 = strval($number2);
         }
 
-        $result  = null;
-        $compare = false;
-
+        // Normalise operator
         $action = self::normaliseOperator($action);
 
+        // Perform calculation
+        return self::performCalc($number1, $action, $number2, $round, $decimals, $precision);
+    }
+
+    /**
+     * Normalise operators for bcMath function.
+     * @param  string $operator Operators such as "+", "add"
+     * @return string
+     */
+    public static function normaliseOperator($operator)
+    {
+        switch ($operator) {
+            case 'add':
+            case 'addition':
+                $operator = '+';
+                break;
+            case 'sub':
+            case 'subtract':
+                $operator = '-';
+                break;
+            case 'mul':
+            case 'multiply':
+                $operator = '*';
+                break;
+            case 'div':
+            case 'divide':
+                $operator = '/';
+                break;
+            case 'mod':
+            case 'modulus':
+                $operator = '%';
+                break;
+            case 'comp':
+            case 'compare':
+                $operator = '=';
+                break;
+        }
+        return $operator;
+    }
+
+    /**
+     * Function which performs calculation.
+     * @param  [type] $number1   [description]
+     * @param  [type] $action    [description]
+     * @param  [type] $number2   [description]
+     * @param  [type] $round     [description]
+     * @param  [type] $decimals  [description]
+     * @param  [type] $precision [description]
+     * @return [type]            [description]
+     */
+    private static function performCalc($number1, $action, $number2, $round, $decimals, $precision)
+    {
+        $result = null;
+        $compare = false;
         switch ($action) {
             case '+':
                 $result = (self::$blnBcmath) ? bcadd($number1, $number2, $precision) /* string */ : ($number1 + $number2);
@@ -142,41 +196,5 @@ class Maths
         }
 
         return false;
-    }
-
-    /**
-     * Normalise operators for bcMath function.
-     * @param  string $operator Operators such as "+", "add"
-     * @return string
-     */
-    public static function normaliseOperator($operator)
-    {
-        switch ($operator) {
-            case 'add':
-            case 'addition':
-                $operator = '+';
-                break;
-            case 'sub':
-            case 'subtract':
-                $operator = '-';
-                break;
-            case 'mul':
-            case 'multiply':
-                $operator = '*';
-                break;
-            case 'div':
-            case 'divide':
-                $operator = '/';
-                break;
-            case 'mod':
-            case 'modulus':
-                $operator = '%';
-                break;
-            case 'comp':
-            case 'compare':
-                $operator = '=';
-                break;
-        }
-        return $operator;
     }
 }
