@@ -133,7 +133,6 @@ class Text
             self::$blnMbstring = extension_loaded('mbstring');
         }
 
-        $strLowerCaseText = '';
         if (!self::$blnMbstring) {
             $strLowerCaseText = strtolower($strText);
         } else {
@@ -160,7 +159,6 @@ class Text
             self::$blnMbstring = extension_loaded('mbstring');
         }
 
-        $strUpperCaseText = '';
         if (!self::$blnMbstring) {
             $strUpperCaseText = strtoupper($strText);
         } else {
@@ -189,8 +187,6 @@ class Text
             self::$blnMbstring = extension_loaded('mbstring');
         }
 
-        $strSubstring = '';
-
         if (!self::$blnMbstring) {
             $strSubstring = substr($strText, $intStart, $intLength);
         } else {
@@ -216,8 +212,6 @@ class Text
         if (is_null(self::$blnMbstring)) {
             self::$blnMbstring = extension_loaded('mbstring');
         }
-
-        $intTextLength = 0;
 
         if (!self::$blnMbstring) {
             $intTextLength = strlen($strText);
