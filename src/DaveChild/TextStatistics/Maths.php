@@ -22,12 +22,12 @@ class Maths
      */
     public static function normaliseScore($score, $min, $max, $dps = 1)
     {
-        $score = self::bcCalc($score, '+', 0, true, $dps); // Round
         if ($score > $max) {
             $score = $max;
         } elseif ($score < $min) {
             $score = $min;
         }
+        $score = self::bcCalc($score, '+', 0, true, $dps); // Round
 
         return $score;
     }
@@ -100,10 +100,12 @@ class Maths
             case '/':
             case 'div':
             case 'divide':
-                if (self::$blnBcmath) {
-                    $result = bcdiv($number1, $number2, $precision); // string, or NULL if right_operand is 0
-                } else if ($number2 != 0) {
-                    $result = $number1 / $number2;
+                if ($number2 > 0) {
+                    if (self::$blnBcmath) {
+                        $result = bcdiv($number1, $number2, $precision); // string, or NULL if right_operand is 0
+                    } else if ($number2 != 0) {
+                        $result = $number1 / $number2;
+                    }
                 }
 
                 if (!isset($result)) {
