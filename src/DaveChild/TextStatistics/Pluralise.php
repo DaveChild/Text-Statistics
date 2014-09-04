@@ -63,15 +63,15 @@ class Pluralise
     );
 
     private static $irregular = array(
-        'move'   => 'moves',
+        'child'  => 'children',
         'foot'   => 'feet',
         'goose'  => 'geese',
-        'sex'    => 'sexes',
-        'child'  => 'children',
         'man'    => 'men',
-        'tooth'  => 'teeth',
+        'mouse'  => 'mice',
+        'move'   => 'moves',
         'person' => 'people',
-        'mouse'  => 'mice'
+        'sex'    => 'sexes',
+        'tooth'  => 'teeth',
     );
 
     // Some words are only uncountable sometimes. For example, "blues" can be
@@ -155,6 +155,14 @@ class Pluralise
         // save some time in the case that singular and plural are the same
         if (in_array(strtolower($string), self::$uncountable)) {
             return $string;
+        }
+
+        // check to see if already singular and irregular
+        foreach (self::$irregular as $pattern => $result) {
+            $_pattern = '/' . $pattern . '$/i';
+            if (preg_match($_pattern, $string)) {
+                return $string;
+            }
         }
 
         // check for irregular plural forms
