@@ -144,38 +144,37 @@ class Maths
         return false;
     }
 
+    /**
+     * Normalise operators for bcMath function.
+     * @param  string $operator Operators such as "+", "add"
+     * @return string
+     */
     public static function normaliseOperator($operator)
     {
         switch ($operator) {
-            case '+':
             case 'add':
             case 'addition':
-                return '+';
+                $operator = '+';
                 break;
-            case '-':
             case 'sub':
             case 'subtract':
-                return '-';
+                $operator = '-';
                 break;
-            case '*':
             case 'mul':
             case 'multiply':
-                return '*';
+                $operator = '*';
                 break;
-            case '/':
             case 'div':
             case 'divide':
-                return '/';
+                $operator = '/';
                 break;
-            case '%':
             case 'mod':
             case 'modulus':
-                return '%';
+                $operator = '%';
                 break;
-            case '=':
             case 'comp':
             case 'compare':
-                return '=';
+                $operator = '=';
                 break;
         }
         return $operator;
