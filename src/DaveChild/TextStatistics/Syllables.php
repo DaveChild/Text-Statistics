@@ -255,9 +255,14 @@ class Syllables
         $strWord = trim($strWord);
 
         // Check we have some letters
-        if (Text::textLength(trim($strWord), $strEncoding) == 0) {
+        if (Text::letterCount(trim($strWord), $strEncoding) == 0) {
             return 0;
         }
+
+        // $debug is an array containing the basic syllable counting steps for
+        // this word.
+        $debug = array();
+        $debug['Counting syllables for'] = $strWord;
 
         // Should be no non-alpha characters and lower case
         $strWord = preg_replace('`[^A-Za-z]`', '', $strWord);
@@ -275,19 +280,16 @@ class Syllables
             }
         }
 
-        if (defined('DEBUG_READABILITY')) {
-            echo '<pre>Counting syllables for: "' . $strWord . '"' . "\r\n";
-        }
+        $debug['After cleaning, lcase'] = $strWord;
 
         // Remove prefixes and suffixes and count how many were taken
         $strWord = preg_replace(self::$arrAffix, '', $strWord, -1, $intAffixCount);
         $strWord = preg_replace(self::$arrDoubleAffix, '', $strWord, -1, $intDoubleAffixCount);
         $strWord = preg_replace(self::$arrTripleAffix, '', $strWord, -1, $intTripleAffixCount);
-        if (defined('DEBUG_READABILITY')) {
-            if (($intAffixCount + $intDoubleAffixCount + $intTripleAffixCount) > 0) {
-                echo 'After Prefix and Suffix Removal: "' . $strWord . '"' . "\r\n";
-                echo '(' . $intAffixCount . ' * 1 syllable, ' . $intDoubleAffixCount . ' * 2 syllables, ' . $intTripleAffixCount . ' * 3 syllables)' . "\r\n";
-            }
+
+        if (($intAffixCount + $intDoubleAffixCount + $intTripleAffixCount) > 0) {
+            $debug['After Prefix and Suffix Removal'] = $strWord;
+            $debug['Prefix and suffix counts'] = $intAffixCount . ' * 1 syllable, ' . $intDoubleAffixCount . ' * 2 syllables, ' . $intTripleAffixCount . ' * 3 syllables';
         }
 
         // Removed non-word characters from word
@@ -295,9 +297,7 @@ class Syllables
         $intWordPartCount = 0;
         foreach ($arrWordParts as $strWordPart) {
             if ($strWordPart <> '') {
-                if (defined('DEBUG_READABILITY')) {
-                    echo 'Counting: "' . $strWordPart . '"' . "\r\n";
-                }
+                $debug['Counting (' . $intWordPartCount . ')'] = $strWordPart;
                 $intWordPartCount++;
             }
         }
@@ -305,33 +305,25 @@ class Syllables
         // Some syllables do not follow normal rules - check for them
         // Thanks to Joe Kovar for correcting a bug in the following lines
         $intSyllableCount = $intWordPartCount + $intAffixCount + (2 * $intDoubleAffixCount) + (3 * $intTripleAffixCount);
-        if (defined('DEBUG_READABILITY')) {
-            echo 'Syllables by Vowel Count: "' . $intSyllableCount . '"' . "\r\n";
-        }
+        $debug['Syllables by Vowel Count'] = $intSyllableCount;
 
         foreach (self::$arrSubSyllables as $strSyllable) {
             $_intSyllableCount = $intSyllableCount;
             $intSyllableCount -= preg_match('`' . $strSyllable . '`', $strWord);
-            if (defined('DEBUG_READABILITY')) {
-                if ($_intSyllableCount != $intSyllableCount) {
-                    echo 'Subtracting: "' . $strSyllable . '"' . "\r\n";
-                }
+            if ($_intSyllableCount != $intSyllableCount) {
+                $debug['Subtracting (' . $strSyllable . ')'] = $strSyllable;
             }
         }
         foreach (self::$arrAddSyllables as $strSyllable) {
             $_intSyllableCount = $intSyllableCount;
             $intSyllableCount += preg_match('`' . $strSyllable . '`', $strWord);
-            if (defined('DEBUG_READABILITY')) {
-                if ($_intSyllableCount != $intSyllableCount) {
-                    echo 'Adding: "' . $strSyllable . '"' . "\r\n";
-                }
+            if ($_intSyllableCount != $intSyllableCount) {
+                $debug['Adding (' . $strSyllable . ')'] = $strSyllable;
             }
         }
         $intSyllableCount = ($intSyllableCount == 0) ? 1 : $intSyllableCount;
 
-        if (defined('DEBUG_READABILITY')) {
-            echo 'Result: "' . $intSyllableCount . '".</pre>';
-        }
+        $debug['Result'] = $intSyllableCount;
 
         return $intSyllableCount;
     }

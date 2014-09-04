@@ -28,6 +28,7 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
     -------------------- */
     public function testSyllableCountBasicWords()
     { // "Normal" words
+        $this->assertEquals(0, $this->TextStatistics->syllableCount('.'));
         $this->assertEquals(1, $this->TextStatistics->syllableCount('a'));
         $this->assertEquals(1, $this->TextStatistics->syllableCount('was'));
         $this->assertEquals(1, $this->TextStatistics->syllableCount('the'));

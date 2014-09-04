@@ -68,10 +68,6 @@ class TextStatistics
      */
     public function __construct($strEncoding = '')
     {
-        // Uncomment following line to display some helpful debugging output
-        // when trying to refine scoring algorithm.
-        //define('DEBUG_READABILITY', true);
-
         if ($strEncoding != '') {
             // Encoding is given. Use it!
             $this->strEncoding = $strEncoding;
