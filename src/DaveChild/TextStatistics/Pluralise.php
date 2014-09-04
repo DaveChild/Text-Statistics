@@ -27,8 +27,7 @@ class Pluralise
         '/(octop)us$/i'            => "$1i",
         '/(ax|test)is$/i'          => "$1es",
         '/(us)$/i'                 => "$1es",
-        '/s$/i'                    => "s",
-        '/$/'                      => "s"
+        '/s$/i'                    => "s"
     );
 
     private static $singular = array(
@@ -142,7 +141,8 @@ class Pluralise
             }
         }
 
-        return $string;
+        // No pattern match. Add an "s".
+        return $string . 's';
     }
 
     /**

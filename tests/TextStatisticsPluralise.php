@@ -38,6 +38,8 @@ class TextStatisticsPluralise extends PHPUnit_Framework_TestCase
         $this->assertEquals('houses', DaveChild\TextStatistics\Pluralise::getPlural('houses'));
         $this->assertEquals('bananas', DaveChild\TextStatistics\Pluralise::getPlural('bananas'));
         $this->assertEquals('quizzes', DaveChild\TextStatistics\Pluralise::getPlural('quizzes'));
+        $this->assertEquals('buffalo', DaveChild\TextStatistics\Pluralise::getPlural('buffalo'));
+        $this->assertEquals('money', DaveChild\TextStatistics\Pluralise::getPlural('money'));
     }
 
     /* Test Singularisations
@@ -54,5 +56,7 @@ class TextStatisticsPluralise extends PHPUnit_Framework_TestCase
         $this->assertEquals('house', DaveChild\TextStatistics\Pluralise::getSingular('houses'));
         $this->assertEquals('banana', DaveChild\TextStatistics\Pluralise::getSingular('bananas'));
         $this->assertEquals('quiz', DaveChild\TextStatistics\Pluralise::getSingular('quizzes'));
+        $this->assertEquals('buffalo', DaveChild\TextStatistics\Pluralise::getPlural('buffalo'));
+        $this->assertEquals('money', DaveChild\TextStatistics\Pluralise::getPlural('money'));
     }
 }
