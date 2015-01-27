@@ -9,13 +9,13 @@ class Resource
      * Array containing the Spache word list, if set.
      * @var array|boolean
      */
-    protected $arrSpache = false;
+    static protected $arrSpache = false;
 
     /**
      * Array containing the Dale-Chall word list, if set.
      * @var array|boolean
      */
-    protected $arrDaleChall = false;
+    static protected $arrDaleChall = false;
 
     /**
      * Fetch the list of Spache easy words
