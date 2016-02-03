@@ -260,11 +260,11 @@ class TextStatistics
                             Text::sentenceCount($strText, $this->strEncoding)
                         )
                     ),
-                    '+',
-                    3.1291
+                    'sqrt',
+                    0
                 ),
-                'sqrt',
-                0
+                '+',
+                3.1291
             )
         );
 
