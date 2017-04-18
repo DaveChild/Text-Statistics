@@ -1,4 +1,4 @@
-#PHP Text Statistics
+# PHP Text Statistics
 
 [![Build Status](https://travis-ci.org/DaveChild/Text-Statistics.svg?branch=master)](https://travis-ci.org/DaveChild/Text-Statistics) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveChild/Text-Statistics/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveChild/Text-Statistics/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/DaveChild/Text-Statistics/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/DaveChild/Text-Statistics/?branch=master)
 
@@ -20,9 +20,9 @@ Please feel free to add to the test word list, especially if you can find words 
 
 Homographs are going to be impossible to calculate as they depend on context (i.e., "he moped around the house", "she rode her moped to school), but there are few enough of these not to be a concern. There is a by-no-means-comprehensive list of these in the resources folder.
 
-##Installation
+## Installation
 
-###Using Composer
+### Using Composer
 
     {
         "require": {
@@ -30,34 +30,34 @@ Homographs are going to be impossible to calculate as they depend on context (i.
         }
     }
 
-###Measuring Readability
+### Measuring Readability
 
     use DaveChild\TextStatistics as TS;
     $textStatistics = new TS\TextStatistics;
     $text = 'The quick brown fox jumped over the lazy dog.';
     echo 'Flesch-Kincaid Reading Ease: ' . $textStatistics->fleschKincaidReadingEase($text);
 
-###More Text Shenanigans!
+### More Text Shenanigans!
 
 Included with this package are several classes with static methods which can be called independently. If required, you can pass a text encoding to these methods as a second parameter.
 
-####Pluralise and Singularise Words
+#### Pluralise and Singularise Words
 
     echo DaveChild\TextStatistics\Pluralise::getPlural('banana'); // bananas
     echo DaveChild\TextStatistics\Pluralise::getSingular('bananas'); // banana
 
-####Count Syllables
+#### Count Syllables
 
     echo DaveChild\TextStatistics\Syllables::syllableCount('banana'); // 3
 
-####Letter, Sentence, Word Counts
+#### Letter, Sentence, Word Counts
 
     echo DaveChild\TextStatistics\Text::textLength('I ate a banana.'); // 15
     echo DaveChild\TextStatistics\Text::letterCount('I ate a banana.'); // 11
     echo DaveChild\TextStatistics\Text::wordCount('I ate a banana.'); // 4
     echo DaveChild\TextStatistics\Text::sentenceCount('I ate a banana.'); // 1
 
-##Useful Links
+## Useful Links
 
 **Homepage and Live Version**
 
