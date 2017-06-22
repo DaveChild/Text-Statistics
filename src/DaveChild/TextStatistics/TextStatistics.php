@@ -398,6 +398,33 @@ class TextStatistics
     }
 
     /**
+     * Gives the Laesbarhetsindex of text entered
+     * @param   boolean|string  $strText         Text to be checked
+     * @return  int|float
+     */
+    public function laesbarhetsindex($strText = false)
+    {
+        $strText = $this->setText($strText);
+
+        $score = Maths::bcCalc(
+            Maths::bcCalc(
+                100,
+                '*',
+                Text::percentageWordsWithSevenLetters($strText, false, $this->strEncoding)
+            ),
+            '+',
+            Text::averageWordsPerSentence($strText, $this->strEncoding)
+        );
+
+        //ToDo: Does this work correct? Please Test and fix.
+        if ($this->normalise) {
+            return Maths::normaliseScore($score, 0, 100, $this->dps);
+        } else {
+            return Maths::bcCalc($score, '+', 0, true, $this->dps);
+        }
+    }
+
+    /**
      * Returns the number of words NOT on the Dale-Chall easy word list
      * @param   boolean|string  $strText                  Text to be measured
      * @return  int

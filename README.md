@@ -13,6 +13,7 @@ It allows you to measure the readability of text using common scoring systems, i
 * Automated Reability Index
 * Dale-Chall Readability Score
 * Spache Readability Score
+* Läsbarhetsindex (Calculation might not be correct. Feel free to correct. See: Text::wordsWithSevenLetters)
 
 One of the biggest challenges with measuring text readability is the counting of syllables, which can be tricky to work out. There are rules in the Statistics class for working out the syllable count of words, and a large list of words to test these rules against.
 
