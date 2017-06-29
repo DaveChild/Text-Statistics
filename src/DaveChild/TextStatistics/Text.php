@@ -260,7 +260,7 @@ class Text
         try {
 
             if (!self::$blnMbstring) {
-                throw new Exception('The extension mbstring is not loaded.');
+                throw new \Exception('The extension mbstring is not loaded.');
             }
 
             if ($strEncoding == '') {
