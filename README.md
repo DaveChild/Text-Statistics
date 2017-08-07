@@ -7,6 +7,7 @@ The PHP Text Statistics class will help you to indentify issues with your websit
 It allows you to measure the readability of text using common scoring systems, including:
 * Flesch Kincaid Reading Ease
 * Flesch Kincaid Grade Level
+* Forcast
 * Gunning Fog Score
 * Coleman Liau Index
 * SMOG Index

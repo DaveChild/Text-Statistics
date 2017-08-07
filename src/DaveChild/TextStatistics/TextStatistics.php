@@ -425,6 +425,37 @@ class TextStatistics
     }
 
     /**
+     * Gives the FORCAST of text entered
+     * @param   boolean|string  $strText         Text to be checked
+     * @return  int|float
+     */
+    public function forcast($strText = false)
+    {
+        $strText = $this->setText($strText);
+
+        $score = Maths::bcCalc(
+            20,
+            '-',
+            Maths::bcCalc(
+                15,
+                '*',
+                Maths::bcCalc(
+                    Syllables::wordsWithOneSyllable($strText, false, $this->strEncoding),
+                    '/',
+                    Text::wordCount($strText , $this->strEncoding)
+                )
+            )
+        );
+
+//TODO: Does this work correct? Please Test and fix.
+        if ($this->normalise) {
+            return Maths::normaliseScore($score, 0, 12, $this->dps);
+        } else {
+            return Maths::bcCalc($score, '+', 0, true, $this->dps);
+        }
+    }
+
+    /**
      * Returns the number of words NOT on the Dale-Chall easy word list
      * @param   boolean|string  $strText                  Text to be measured
      * @return  int

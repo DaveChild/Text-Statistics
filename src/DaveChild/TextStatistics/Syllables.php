@@ -407,4 +407,33 @@ class Syllables
 
         return $intPercentage;
     }
+    
+    /**
+     * Returns the number of words with one syllables
+     * @param   string  $strText                  Text to be measured
+     * @param   bool    $blnCountProperNouns      Boolean - should proper nouns be included in words count
+     * @param   string  $strEncoding  Encoding of text
+     * @return  int
+     */
+    public static function wordsWithOneSyllable($strText, $blnCountProperNouns = true, $strEncoding = '')
+    {
+        $intMonosyllabicWordCount = 0;
+        $intWordCount = Text::wordCount($strText, $strEncoding);
+        $arrWords = explode(' ', $strText);
+        for ($i = 0; $i < $intWordCount; $i++) {
+            if (self::syllableCount($arrWords[$i], $strEncoding) == 1) {
+                if ($blnCountProperNouns) {
+                    $intMonosyllabicWordCount++;
+                } else {
+                    $strFirstLetter = Text::substring($arrWords[$i], 0, 1, $strEncoding);
+                    if ($strFirstLetter !== Text::upperCase($strFirstLetter, $strEncoding)) {
+                        // First letter is lower case. Count it.
+                        $intMonosyllabicWordCount++;
+                    }
+                }
+            }
+        }
+
+        return $intMonosyllabicWordCount;
+    }
 }
