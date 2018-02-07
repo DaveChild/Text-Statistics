@@ -111,7 +111,7 @@ class Text
         $strText = trim(preg_replace('`[ ]*([\.])`', '$1 ', $strText)); // Pad sentence terminators
 
         // Lower case all words following terminators (for gunning fog score)
-        $strText = preg_replace_callback('`\. [^\. ]`', create_function('$matches', 'return strtolower($matches[0]);'), $strText);
+        $strText = preg_replace_callback('`\. [^\. ]`', function($matches){ return strtolower($matches[0]); }, $strText);
 
         $strText = trim($strText);
 
