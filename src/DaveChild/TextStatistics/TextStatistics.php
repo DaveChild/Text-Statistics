@@ -43,6 +43,12 @@ class TextStatistics
      * by object, if set
      */
     protected $strEncoding = '';
+    
+    /**
+     * @var Maximum grade level to be reported. Calculated grades above 
+     * this level will be returned as this value.
+     */
+    protected $maxGradeLevel = 12;
 
     /**
      * @var bool $normalise Should the result be normalised?
@@ -99,6 +105,23 @@ class TextStatistics
     {
         $this->strEncoding = $strEncoding;
         return true;
+    }
+    
+    /**
+     * Set the maximum grade level for grade-level type indexes
+     * (Flesch-Kincaid Grade Level, Gunning-Fog, Coleman-Liau, SMOG, Automated Readability)
+     * @param	integer	$maxGradeLevel	Grade level to use
+     * @return	boolean	Success
+     */
+    public function setMaxGradeLevel($maxGradeLevel)
+    {
+        $maxGradeLevel = (integer) $maxGradeLevel;
+        if( $maxGradeLevel )
+        {
+        	$this->maxGradeLevel = $maxGradeLevel;
+        	return true;
+        }
+        return false;
     }
 
     /**
@@ -163,7 +186,7 @@ class TextStatistics
         );
 
         if ($this->normalise) {
-            return Maths::normaliseScore($score, 0, 12, $this->dps);
+            return Maths::normaliseScore($score, 0, $this->maxGradeLevel, $this->dps);
         } else {
             return Maths::bcCalc($score, '+', 0, true, $this->dps);
         }
@@ -231,7 +254,7 @@ class TextStatistics
         );
 
         if ($this->normalise) {
-            return Maths::normaliseScore($score, 0, 12, $this->dps);
+            return Maths::normaliseScore($score, 0, $this->maxGradeLevel, $this->dps);
         } else {
             return Maths::bcCalc($score, '+', 0, true, $this->dps);
         }
@@ -269,7 +292,7 @@ class TextStatistics
         );
 
         if ($this->normalise) {
-            return Maths::normaliseScore($score, 0, 12, $this->dps);
+            return Maths::normaliseScore($score, 0, $this->maxGradeLevel, $this->dps);
         } else {
             return Maths::bcCalc($score, '+', 0, true, $this->dps);
         }
@@ -311,7 +334,7 @@ class TextStatistics
         );
 
         if ($this->normalise) {
-            return Maths::normaliseScore($score, 0, 12, $this->dps);
+            return Maths::normaliseScore($score, 0, $this->maxGradeLevel, $this->dps);
         } else {
             return Maths::bcCalc($score, '+', 0, true, $this->dps);
         }
