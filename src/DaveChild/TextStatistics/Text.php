@@ -288,7 +288,7 @@ class Text
         }
 
         // Will be tripped by em dashes with spaces either side, among other similar characters
-        $intWords = 1 + self::textLength(preg_replace('`[^ ]`', '', $strText), $strEncoding); // Space count + 1 is word count
+        $intWords = 1 + self::textLength(preg_replace('`[^ ]`', '', preg_replace('`\s+`', ' ', $strText)), $strEncoding); // Space count + 1 is word count
 
         return $intWords;
     }
