@@ -61,7 +61,7 @@ Included with this package are several classes with static methods which can be 
 
 **Homepage and Live Version**
 
-https://readability-score.com/
+https://readable.io/
 
 **JavaScript Port**
 
