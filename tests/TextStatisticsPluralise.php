@@ -1,6 +1,6 @@
 <?php
 
-class TextStatisticsPluralise extends PHPUnit_Framework_TestCase
+class TextStatisticsPluralise extends \PHPUnit\Framework\TestCase
 {
 
     /*

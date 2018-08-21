@@ -1,6 +1,6 @@
 <?php
 
-class TextStatisticsTestCMULex extends PHPUnit_Framework_TestCase
+class TextStatisticsTestCMULex extends \PHPUnit\Framework\TestCase
 {
 
     /*

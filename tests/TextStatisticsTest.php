@@ -1,6 +1,6 @@
 <?php
 
-class TextStatisticsTest extends PHPUnit_Framework_TestCase
+class TextStatisticsTest extends \PHPUnit\Framework\TestCase
 {
 
     /*
@@ -300,12 +300,12 @@ class TextStatisticsTest extends PHPUnit_Framework_TestCase
 
     public function testSMOGIndex()
     {
-        $this->assertEquals(1.8, $this->TextStatistics->smog_index('This. Is. A. Nice. Set. Of. Small. Words. Of. One. Part. Each.')); // Should be 1.8 for any text with no words of 3+ syllables
-        $this->assertEquals(1.8, $this->TextStatistics->smog_index('The quick brown fox jumps over the lazy dog.'));
-        $this->assertEquals(1.8, $this->TextStatistics->smog_index('The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.'));
-        $this->assertEquals(1.8, $this->TextStatistics->smog_index("The quick brown fox jumps over the lazy dog. \n\n The quick brown fox jumps over the lazy dog."));
-        $this->assertEquals(1.8, $this->TextStatistics->smog_index('The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog'));
-        $this->assertEquals(10.1, $this->TextStatistics->smog_index('Now it is time for a more complicated sentence, including several longer words.'));
+        $this->assertEquals(3.3, $this->TextStatistics->smog_index('This. Is. A. Nice. Set. Of. Small. Words. Of. One. Part. Each.')); // Should be 1.8 for any text with no words of 3+ syllables
+        $this->assertEquals(3.3, $this->TextStatistics->smog_index('The quick brown fox jumps over the lazy dog.'));
+        $this->assertEquals(3.3, $this->TextStatistics->smog_index('The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.'));
+        $this->assertEquals(3.3, $this->TextStatistics->smog_index("The quick brown fox jumps over the lazy dog. \n\n The quick brown fox jumps over the lazy dog."));
+        $this->assertEquals(3.3, $this->TextStatistics->smog_index('The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog'));
+        $this->assertEquals(13.2, $this->TextStatistics->smog_index('Now it is time for a more complicated sentence, including several longer words.'));
     }
 
     public function testAutomatedReadabilityIndex()

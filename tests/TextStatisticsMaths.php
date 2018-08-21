@@ -1,6 +1,6 @@
 <?php
 
-class TextStatisticsMaths extends PHPUnit_Framework_TestCase
+class TextStatisticsMaths extends \PHPUnit\Framework\TestCase
 {
 
     /*
@@ -81,12 +81,12 @@ class TextStatisticsMaths extends PHPUnit_Framework_TestCase
         $this->assertSame(3.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 7, true, 1));
         $this->assertSame(3.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 7, true, 1));
         // Modulus can only be an integer and is rounded before calculation
-        $this->assertSame(0.0, DaveChild\TextStatistics\Maths::bcCalc(10, '%', 5.55, true, 1));
-        $this->assertSame(0.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 5.55, true, 1));
-        $this->assertSame(0.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 5.55, true, 1));
-        $this->assertSame(3.0, DaveChild\TextStatistics\Maths::bcCalc(10, '%', 7.55, true, 1));
-        $this->assertSame(3.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 7.55, true, 1));
-        $this->assertSame(3.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 7.55, true, 1));
+        $this->assertSame(4.0, DaveChild\TextStatistics\Maths::bcCalc(10, '%', 5.55, true, 1));
+        $this->assertSame(4.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 5.55, true, 1));
+        $this->assertSame(4.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 5.55, true, 1));
+        $this->assertSame(2.0, DaveChild\TextStatistics\Maths::bcCalc(10, '%', 7.55, true, 1));
+        $this->assertSame(2.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 7.55, true, 1));
+        $this->assertSame(2.0, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 7.55, true, 1));
 
         $this->assertSame(1, DaveChild\TextStatistics\Maths::bcCalc(10, '=', 5, true, 1));
         $this->assertSame(1, DaveChild\TextStatistics\Maths::bcCalc(10, 'comp', 5, true, 1));
@@ -139,12 +139,12 @@ class TextStatisticsMaths extends PHPUnit_Framework_TestCase
         $this->assertSame(3, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 7));
         $this->assertSame(3, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 7));
         // Modulus can only be an integer and is rounded before calculation
-        $this->assertSame(0, DaveChild\TextStatistics\Maths::bcCalc(10, '%', 5.55));
-        $this->assertSame(0, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 5.55));
-        $this->assertSame(0, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 5.55));
-        $this->assertSame(3, DaveChild\TextStatistics\Maths::bcCalc(10, '%', 7.55));
-        $this->assertSame(3, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 7.55));
-        $this->assertSame(3, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 7.55));
+        $this->assertSame(4, DaveChild\TextStatistics\Maths::bcCalc(10, '%', 5.55));
+        $this->assertSame(4, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 5.55));
+        $this->assertSame(4, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 5.55));
+        $this->assertSame(2, DaveChild\TextStatistics\Maths::bcCalc(10, '%', 7.55));
+        $this->assertSame(2, DaveChild\TextStatistics\Maths::bcCalc(10, 'mod', 7.55));
+        $this->assertSame(2, DaveChild\TextStatistics\Maths::bcCalc(10, 'modulus', 7.55));
 
         $this->assertSame(1, DaveChild\TextStatistics\Maths::bcCalc(10, '=', 5));
         $this->assertSame(1, DaveChild\TextStatistics\Maths::bcCalc(10, 'comp', 5));

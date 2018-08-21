@@ -1,6 +1,6 @@
 <?php
 
-class TextStatisticsKiplingIf extends PHPUnit_Framework_TestCase
+class TextStatisticsKiplingIf extends \PHPUnit\Framework\TestCase
 {
 
     /*
@@ -456,7 +456,7 @@ class TextStatisticsKiplingIf extends PHPUnit_Framework_TestCase
     -------------------- */
     public function testSMOGIndex()
     {
-        $this->assertEquals(7.2, $this->TextStatistics->smog_index($this->strText));
+        $this->assertEquals(10.3, $this->TextStatistics->smog_index($this->strText));
     }
 
     /* Test Automated Readability Index

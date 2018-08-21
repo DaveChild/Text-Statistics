@@ -1,6 +1,6 @@
 <?php
 
-class TextStatisticsMelvilleMobyDick extends PHPUnit_Framework_TestCase
+class TextStatisticsMelvilleMobyDick extends \PHPUnit\Framework\TestCase
 {
 
     /*
@@ -325,7 +325,7 @@ class TextStatisticsMelvilleMobyDick extends PHPUnit_Framework_TestCase
     -------------------- */
     public function testSMOGIndex()
     {
-        $this->assertEquals(9.9, $this->TextStatistics->smog_index($this->strText));
+        $this->assertEquals(13.0, $this->TextStatistics->smog_index($this->strText));
     }
 
     /* Test Automated Readability Index
@@ -334,4 +334,4 @@ class TextStatisticsMelvilleMobyDick extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(11.8, $this->TextStatistics->automated_readability_index($this->strText));
     }
-    }
+}
