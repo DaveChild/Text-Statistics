@@ -29,6 +29,8 @@ Homographs are going to be impossible to calculate as they depend on context (i.
             "davechild/textstatistics": "1.*"
         }
     }
+    
+(If using a version of PHP < 7.2, specify version 1.0.2.)
 
 ### Measuring Readability
 
