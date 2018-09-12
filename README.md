@@ -23,21 +23,24 @@ Homographs are going to be impossible to calculate as they depend on context (i.
 ## Installation
 
 ### Using Composer
-
+```json
     {
         "require": {
             "davechild/textstatistics": "1.*"
         }
     }
-    
-(If using a version of PHP < 7.2, specify version 1.0.2.)
+```    
+
+> If using a version of PHP < 7.2, specify version 1.0.2.
 
 ### Measuring Readability
 
-    use DaveChild\TextStatistics as TS;
-    $textStatistics = new TS\TextStatistics;
-    $text = 'The quick brown fox jumped over the lazy dog.';
-    echo 'Flesch-Kincaid Reading Ease: ' . $textStatistics->fleschKincaidReadingEase($text);
+```php
+use DaveChild\TextStatistics as TS;
+$textStatistics = new TS\TextStatistics;
+$text = 'The quick brown fox jumped over the lazy dog.';
+echo 'Flesch-Kincaid Reading Ease: ' . $textStatistics->fleschKincaidReadingEase($text);
+```
 
 ### More Text Shenanigans!
 
@@ -45,19 +48,25 @@ Included with this package are several classes with static methods which can be 
 
 #### Pluralise and Singularise Words
 
-    echo DaveChild\TextStatistics\Pluralise::getPlural('banana'); // bananas
-    echo DaveChild\TextStatistics\Pluralise::getSingular('bananas'); // banana
+```php
+echo DaveChild\TextStatistics\Pluralise::getPlural('banana'); // bananas
+echo DaveChild\TextStatistics\Pluralise::getSingular('bananas'); // banana
+```
 
 #### Count Syllables
 
-    echo DaveChild\TextStatistics\Syllables::syllableCount('banana'); // 3
+```php
+echo DaveChild\TextStatistics\Syllables::syllableCount('banana'); // 3
+```
 
 #### Letter, Sentence, Word Counts
 
-    echo DaveChild\TextStatistics\Text::textLength('I ate a banana.'); // 15
-    echo DaveChild\TextStatistics\Text::letterCount('I ate a banana.'); // 11
-    echo DaveChild\TextStatistics\Text::wordCount('I ate a banana.'); // 4
-    echo DaveChild\TextStatistics\Text::sentenceCount('I ate a banana.'); // 1
+```php
+echo DaveChild\TextStatistics\Text::textLength('I ate a banana.'); // 15
+echo DaveChild\TextStatistics\Text::letterCount('I ate a banana.'); // 11
+echo DaveChild\TextStatistics\Text::wordCount('I ate a banana.'); // 4
+echo DaveChild\TextStatistics\Text::sentenceCount('I ate a banana.'); // 1
+```
 
 ## Useful Links
 
