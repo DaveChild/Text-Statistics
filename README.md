@@ -72,7 +72,7 @@ echo DaveChild\TextStatistics\Text::sentenceCount('I ate a banana.'); // 1
 
 **Homepage and Live Version**
 
-https://readable.io/
+https://readable.com/
 
 **JavaScript Port**
 
