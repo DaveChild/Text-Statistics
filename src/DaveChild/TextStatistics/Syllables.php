@@ -43,6 +43,7 @@ class Syllables
         ,'karate'           => 3
         ,'machete'          => 3
         ,'maybe'            => 2
+        ,'packed'           => 1
         ,'people'           => 2
         ,'recipe'           => 3
         ,'sesame'           => 3
