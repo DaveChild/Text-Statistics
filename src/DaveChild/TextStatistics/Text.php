@@ -24,8 +24,8 @@ class Text
     public static function cleanText($strText)
     {
 
-        // Check for boolean before processing as string
-        if (is_bool($strText)) {
+        // Check for boolean OR null value before processing as string
+        if (is_bool($strText) || is_null($strText)) {
             return '';
         }
 
