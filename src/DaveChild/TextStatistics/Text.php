@@ -6,11 +6,6 @@ class Text
 {
 
     /**
-     * @var boolean $blnMbstring Efficiency: Is the MB String extension loaded?
-     */
-    protected static $blnMbstring = null;
-
-    /**
      * @var array $clean Efficiency: Store strings once processed.
      */
     protected static $clean = array();
@@ -128,19 +123,10 @@ class Text
      */
     public static function lowerCase($strText, $strEncoding = '')
     {
-
-        if (is_null(self::$blnMbstring)) {
-            self::$blnMbstring = extension_loaded('mbstring');
-        }
-
-        if (!self::$blnMbstring) {
-            $strLowerCaseText = strtolower($strText);
+        if ($strEncoding == '') {
+            $strLowerCaseText = mb_strtolower($strText);
         } else {
-            if ($strEncoding == '') {
-                $strLowerCaseText = mb_strtolower($strText);
-            } else {
-                $strLowerCaseText = mb_strtolower($strText, $strEncoding);
-            }
+            $strLowerCaseText = mb_strtolower($strText, $strEncoding);
         }
 
         return $strLowerCaseText;
@@ -154,19 +140,10 @@ class Text
      */
     public static function upperCase($strText, $strEncoding = '')
     {
-
-        if (is_null(self::$blnMbstring)) {
-            self::$blnMbstring = extension_loaded('mbstring');
-        }
-
-        if (!self::$blnMbstring) {
-            $strUpperCaseText = strtoupper($strText);
+        if ($strEncoding == '') {
+            $strUpperCaseText = mb_strtoupper($strText);
         } else {
-            if ($strEncoding == '') {
-                $strUpperCaseText = mb_strtoupper($strText);
-            } else {
-                $strUpperCaseText = mb_strtoupper($strText, $strEncoding);
-            }
+            $strUpperCaseText = mb_strtoupper($strText, $strEncoding);
         }
 
         return $strUpperCaseText;
@@ -182,19 +159,10 @@ class Text
      */
     public static function substring($strText, $intStart, $intLength, $strEncoding = '')
     {
-
-        if (is_null(self::$blnMbstring)) {
-            self::$blnMbstring = extension_loaded('mbstring');
-        }
-
-        if (!self::$blnMbstring) {
-            $strSubstring = substr($strText, $intStart, $intLength);
+        if ($strEncoding == '') {
+            $strSubstring = mb_substr($strText, $intStart, $intLength);
         } else {
-            if ($strEncoding == '') {
-                $strSubstring = mb_substr($strText, $intStart, $intLength);
-            } else {
-                $strSubstring = mb_substr($strText, $intStart, $intLength, $strEncoding);
-            }
+            $strSubstring = mb_substr($strText, $intStart, $intLength, $strEncoding);
         }
 
         return $strSubstring;
@@ -208,19 +176,10 @@ class Text
      */
     public static function textLength($strText, $strEncoding = '')
     {
-
-        if (is_null(self::$blnMbstring)) {
-            self::$blnMbstring = extension_loaded('mbstring');
-        }
-
-        if (!self::$blnMbstring) {
-            $intTextLength = strlen($strText);
+        if ($strEncoding == '') {
+            $intTextLength = mb_strlen($strText);
         } else {
-            if ($strEncoding == '') {
-                $intTextLength = mb_strlen($strText);
-            } else {
-                $intTextLength = mb_strlen($strText, $strEncoding);
-            }
+            $intTextLength = mb_strlen($strText, $strEncoding);
         }
 
         return $intTextLength;
@@ -250,26 +209,13 @@ class Text
             return 0;
         }
 
-        if (is_null(self::$blnMbstring)) {
-            self::$blnMbstring = extension_loaded('mbstring');
-        }
-
         $strText = self::cleanText($strText); // To clear out newlines etc
         $intTextLength = 0;
         $strText = preg_replace('`[^A-Za-z]+`', '', $strText);
-        try {
-
-            if (!self::$blnMbstring) {
-                throw new \Exception('The extension mbstring is not loaded.');
-            }
-
-            if ($strEncoding == '') {
-                $intTextLength = mb_strlen($strText);
-            } else {
-                $intTextLength = mb_strlen($strText, $strEncoding);
-            }
-        } catch (\Exception $e) {
-            $intTextLength = strlen($strText);
+        if ($strEncoding == '') {
+            $intTextLength = mb_strlen($strText);
+        } else {
+            $intTextLength = mb_strlen($strText, $strEncoding);
         }
 
         return $intTextLength;
