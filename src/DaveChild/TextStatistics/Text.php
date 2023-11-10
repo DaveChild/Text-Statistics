@@ -36,7 +36,7 @@ class Text
             return self::$clean[$key];
         }
 
-        $strText = utf8_decode($strText);
+        $strText = mb_convert_encoding($strText, 'UTF-8', 'ISO-8859-1');
 
         // Curly quotes etc
         $strText = str_replace(
