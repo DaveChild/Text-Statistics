@@ -13,13 +13,13 @@ class TextStatisticsMaths extends \PHPUnit\Framework\TestCase
 
     protected $TextStatistics = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->TextStatistics = new DaveChild\TextStatistics\TextStatistics();
         $this->TextStatistics->normalise = false;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->objTextStatistics);
     }
@@ -162,11 +162,11 @@ class TextStatisticsMaths extends \PHPUnit\Framework\TestCase
         // Malformed data
         $this->assertSame(false, DaveChild\TextStatistics\Maths::bcCalc(array('banana'), '+', 2, true, 1));
         $this->assertSame(false, DaveChild\TextStatistics\Maths::bcCalc(2, '+', array('banana'), true, 1));
-        $this->assertSame(0.0, DaveChild\TextStatistics\Maths::bcCalc('two', '+', 'three', true, 1));
-        $this->assertSame(0.0, DaveChild\TextStatistics\Maths::bcCalc('two', '/', 'three', true, 1));
+        $this->assertSame(false, DaveChild\TextStatistics\Maths::bcCalc('two', '+', 'three', true, 1));
+        $this->assertSame(false, DaveChild\TextStatistics\Maths::bcCalc('two', '/', 'three', true, 1));
         $this->assertSame(false, DaveChild\TextStatistics\Maths::bcCalc(array('banana'), '+', 2));
         $this->assertSame(false, DaveChild\TextStatistics\Maths::bcCalc(2, '+', array('banana')));
-        $this->assertSame(0, DaveChild\TextStatistics\Maths::bcCalc('two', '+', 'three'));
-        $this->assertSame(0, DaveChild\TextStatistics\Maths::bcCalc('two', '/', 'three'));
+        $this->assertSame(false, DaveChild\TextStatistics\Maths::bcCalc('two', '+', 'three'));
+        $this->assertSame(false, DaveChild\TextStatistics\Maths::bcCalc('two', '/', 'three'));
     }
 }
