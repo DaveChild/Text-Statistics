@@ -80,13 +80,13 @@ class TextStatisticsKiplingIf extends \PHPUnit\Framework\TestCase
     protected $TextStatistics = null;
     protected $strText = "If you can keep your head when all about you \n Are losing theirs and blaming it on you, \n If you can trust yourself when all men doubt you \n But make allowance for their doubting too, \n If you can wait and not be tired by waiting, \n Or being lied about, don't deal in lies, \n Or being hated, don't give way to hating, \n And yet don't look too good, nor talk too wise: \n\n If you can dream - and not make dreams your master, \n If you can think - and not make thoughts your aim; \n If you can meet with Triumph and Disaster \n And treat those two impostors just the same; \n If you can bear to hear the truth you've spoken \n Twisted by knaves to make a trap for fools, \n Or watch the things you gave your life to, broken, \n And stoop and build 'em up with worn-out tools: \n\n If you can make one heap of all your winnings \n And risk it all on one turn of pitch-and-toss, \n And lose, and start again at your beginnings \n And never breath a word about your loss; \n If you can force your heart and nerve and sinew \n To serve your turn long after they are gone, \n And so hold on when there is nothing in you \n Except the Will which says to them: \"Hold on\" \n\n If you can talk with crowds and keep your virtue, \n Or walk with kings - nor lose the common touch, \n If neither foes nor loving friends can hurt you; \n If all men count with you, but none too much, \n If you can fill the unforgiving minute \n With sixty seconds' worth of distance run, \n Yours is the Earth and everything that's in it, \n And - which is more - you'll be a Man, my son!";
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->TextStatistics = new DaveChild\TextStatistics\TextStatistics();
         $this->TextStatistics->normalise = false;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->objTextStatistics);
     }

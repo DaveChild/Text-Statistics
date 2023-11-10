@@ -11,13 +11,13 @@ class TextStatisticsTestCMULex extends \PHPUnit\Framework\TestCase
 
     protected $TextStatistics = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->TextStatistics = new DaveChild\TextStatistics\TextStatistics();
         $this->TextStatistics->normalise = false;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->objTextStatistics);
     }
