@@ -13,7 +13,7 @@
     "license": "BSD-2-Clause",
     "require": {
         "php": ">=7.2.0",
-        "ext-mbstring": "Handle multi-byte text properly."
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9"
