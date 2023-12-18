@@ -1,0 +1,22 @@
+From 914f8b9f0e1f41aeb4611a3d90e8d543013b126c Mon Sep 17 00:00:00 2001
+From: Thomas Petracco <git@mail.tompec.com>
+Date: Sun, 9 Feb 2020 16:23:58 +1100
+Subject: [PATCH] Fix Undefined offset
+
+---
+ src/DaveChild/TextStatistics/Syllables.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/DaveChild/TextStatistics/Syllables.php b/src/DaveChild/TextStatistics/Syllables.php
+index 5686188..f473eaf 100644
+--- a/src/DaveChild/TextStatistics/Syllables.php
++++ b/src/DaveChild/TextStatistics/Syllables.php
+@@ -357,7 +357,7 @@ public static function averageSyllablesPerWord($strText, $strEncoding = '')
+         $intSyllableCount = 0;
+         $intWordCount = Text::wordCount($strText, $strEncoding);
+         $arrWords = explode(' ', $strText);
+-        for ($i = 0; $i < $intWordCount; $i++) {
++        for ($i = 0; $i < count($arrWords); $i++) {
+             $intSyllableCount += self::syllableCount($arrWords[$i], $strEncoding);
+         }
+         $averageSyllables = (Maths::bcCalc($intSyllableCount, '/', $intWordCount));
