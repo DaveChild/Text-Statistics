@@ -7,12 +7,14 @@ The PHP Text Statistics class will help you to indentify issues with your websit
 It allows you to measure the readability of text using common scoring systems, including:
 * Flesch Kincaid Reading Ease
 * Flesch Kincaid Grade Level
+* Forcast
 * Gunning Fog Score
 * Coleman Liau Index
 * SMOG Index
 * Automated Reability Index
 * Dale-Chall Readability Score
 * Spache Readability Score
+* Läsbarhetsindex (Calculation might not be correct. Feel free to correct. See: Text::wordsWithSevenLetters)
 
 One of the biggest challenges with measuring text readability is the counting of syllables, which can be tricky to work out. There are rules in the Statistics class for working out the syllable count of words, and a large list of words to test these rules against.
 

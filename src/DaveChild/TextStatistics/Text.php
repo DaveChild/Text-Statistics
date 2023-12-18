@@ -325,4 +325,56 @@ class Text
         $averageWords = (Maths::bcCalc($intWordCount, '/', $intSentenceCount));
         return $averageWords;
     }
+
+    /**
+     * Returns the number of words with more than six letters
+     * @param   string  $strText                  Text to be measured
+     * @param   bool    $blnCountProperNouns      Boolean - should proper nouns be included in words count
+     * @param   string  $strEncoding  Encoding of text
+     * @return  int
+     */
+    public static function wordsWithSevenLetters($strText, $blnCountProperNouns = true, $strEncoding = '')
+    {
+        $intLongWordCount = 0;
+        $intWordCount = self::wordCount($strText, $strEncoding);
+        $arrWords = explode(' ', $strText);
+        for ($i = 0; $i < $intWordCount; $i++) {
+            if (self::letterCount($arrWords[$i], $strEncoding) > 6) {
+                //ToDo: Please check "Syllables::wordsWithThreeSyllables": Is there a need for "$blnCountProperNouns"?
+                //ToDo: If so: Uncomment the following; If not: Clean Up code (delete "$blnCountProperNouns")
+                /*
+                if ($blnCountProperNouns) {
+                    $intLongWordCount++;
+                } else {
+                    $strFirstLetter = self::substring($arrWords[$i], 0, 1, $strEncoding);
+                    if ($strFirstLetter !== Text::upperCase($strFirstLetter, $strEncoding)) {
+                        // First letter is lower case. Count it.
+                        $intLongWordCount++;
+                    }
+                }
+                */
+                $intLongWordCount++;
+
+            }
+        }
+        return $intLongWordCount;
+    }
+
+
+    /**
+     * Returns the percentage of words with more than six letters
+     * @param   string  $strText      Text to be measured
+     * @param   bool    $blnCountProperNouns      Boolean - should proper nouns be included in words count
+     * @return  int|float
+     */
+    public static function percentageWordsWithSevenLetters($strText, $blnCountProperNouns = true, $strEncoding = '')
+    {
+        $intWordCount = self::wordCount($strText, $strEncoding);
+        $intLongWordCount = self::wordsWithSevenLetters($strText, $blnCountProperNouns, $strEncoding);
+        $intPercentage = Maths::bcCalc(
+                $intLongWordCount,
+                '/',
+                $intWordCount);
+        return $intPercentage;
+    }
 }
