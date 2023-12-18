@@ -2,6 +2,8 @@
 
 namespace DaveChild\TextStatistics;
 
+use function is_numeric;
+
 class Maths
 {
 
@@ -75,6 +77,10 @@ class Maths
         if (self::$blnBcmath) {
             $number1 = strval($number1);
             $number2 = strval($number2);
+        }
+
+        if (!is_numeric($number1) || !is_numeric($number2)) {
+            return false;
         }
 
         // Normalise operator

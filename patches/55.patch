@@ -1,0 +1,25 @@
+From 9cfb2a39cae58e84c77ef0fde3c7151e8bb5f6b1 Mon Sep 17 00:00:00 2001
+From: root
+ <root@hmz983-linux.q0ytpmdj03pudevb2m0nt33yyb.ux.internal.cloudapp.net>
+Date: Fri, 6 Jan 2023 16:27:47 +0000
+Subject: [PATCH] Fix PHP8.1 issue passing NULL to sha1()
+
+---
+ src/DaveChild/TextStatistics/Text.php | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/DaveChild/TextStatistics/Text.php b/src/DaveChild/TextStatistics/Text.php
+index 4718fa1..5c00f1c 100644
+--- a/src/DaveChild/TextStatistics/Text.php
++++ b/src/DaveChild/TextStatistics/Text.php
+@@ -24,8 +24,8 @@ class Text
+     public static function cleanText($strText)
+     {
+ 
+-        // Check for boolean before processing as string
+-        if (is_bool($strText)) {
++        // Check for boolean OR null value before processing as string
++        if (is_bool($strText) || is_null($strText)) {
+             return '';
+         }
+ 
